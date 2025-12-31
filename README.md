@@ -1,0 +1,383 @@
+# 📄 Smart Document Manager
+
+**Système de Gestion Intelligente des Documents avec OCR et IA**
+
+Un projet académique full-stack complet permettant de téléverser des documents, d'extraire automatiquement le texte via OCR, et de les classifier automatiquement à l'aide de l'intelligence artificielle.
+
+![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-green.svg)
+![React](https://img.shields.io/badge/React-18.2-61dafb.svg)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue.svg)
+
+## 🎯 Objectifs du Projet
+
+- Téléverser des documents scannés (PDF, images)
+- Extraire automatiquement le texte via OCR (Tesseract)
+- Extraire et stocker des métadonnées
+- Classifier automatiquement les documents avec l'IA
+- Visualiser des statistiques dans un tableau de bord
+- Exporter les données en CSV/JSON
+
+## 🛠️ Technologies Utilisées
+
+### Backend
+- **Python 3.9+**
+- **FastAPI** - Framework web moderne
+- **PostgreSQL** - Base de données relationnelle
+- **SQLAlchemy** - ORM Python
+- **Tesseract OCR** - Extraction de texte
+- **OpenCV** - Traitement d'images
+- **scikit-learn** - Machine Learning (TF-IDF + Naive Bayes)
+
+### Frontend
+- **React 18** - Bibliothèque UI
+- **Vite** - Build tool rapide
+- **Tailwind CSS** - Framework CSS utilitaire
+- **Axios** - Client HTTP
+- **Recharts** - Graphiques et visualisations
+- **React Router** - Navigation
+
+## 📁 Structure du Projet
+
+```
+SmartDocManager/
+├── backend/
+│   ├── main.py                 # Point d'entrée FastAPI
+│   ├── database.py            # Configuration PostgreSQL
+│   ├── models.py              # Modèles SQLAlchemy
+│   ├── schemas.py             # Schémas Pydantic
+│   ├── requirements.txt       # Dépendances Python
+│   ├── .env.example          # Configuration exemple
+│   │
+│   ├── api/                   # Routes API REST
+│   │   ├── upload.py         # Upload de documents
+│   │   ├── ocr.py            # Extraction OCR
+│   │   ├── classify.py       # Classification IA
+│   │   └── stats.py          # Statistiques et export
+│   │
+│   ├── services/              # Logique métier
+│   │   ├── image_processing.py   # Traitement OpenCV
+│   │   ├── ocr_service.py        # Service OCR
+│   │   └── ml_service.py         # Service ML
+│   │
+│   ├── ml/                    # Machine Learning
+│   │   ├── train_model.py    # Script d'entraînement
+│   │   ├── model.pkl         # Modèle entraîné
+│   │   └── vectorizer.pkl    # Vectorizer TF-IDF
+│   │
+│   └── storage/documents/     # Fichiers uploadés
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/             # Pages principales
+    │   │   ├── Upload.jsx    # Page d'upload
+    │   │   ├── Documents.jsx # Liste des documents
+    │   │   └── Dashboard.jsx # Statistiques
+    │   │
+    │   ├── components/        # Composants réutilisables
+    │   │   ├── Navbar.jsx
+    │   │   ├── FileUpload.jsx
+    │   │   └── DocumentCard.jsx
+    │   │
+    │   ├── services/
+    │   │   └── api.js        # Service API
+    │   │
+    │   ├── App.jsx           # Composant principal
+    │   ├── main.jsx          # Point d'entrée
+    │   └── index.css         # Styles globaux
+    │
+    ├── package.json
+    ├── vite.config.js
+    ├── tailwind.config.js
+    └── index.html
+```
+
+## 🚀 Installation et Configuration
+
+### Prérequis
+
+1. **Python 3.9+**
+2. **Node.js 16+** et npm
+3. **PostgreSQL 12+**
+4. **Tesseract OCR**
+   - Windows: Télécharger depuis [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
+   - Linux: `sudo apt-get install tesseract-ocr tesseract-ocr-fra`
+   - macOS: `brew install tesseract tesseract-lang`
+
+### Configuration de la Base de Données
+
+1. Créer une base de données PostgreSQL:
+
+```sql
+CREATE DATABASE smartdoc_db;
+CREATE USER smartdoc_user WITH PASSWORD 'votre_mot_de_passe';
+GRANT ALL PRIVILEGES ON DATABASE smartdoc_db TO smartdoc_user;
+```
+
+### Installation Backend
+
+1. Naviguer vers le dossier backend:
+
+```bash
+cd backend
+```
+
+2. Créer un environnement virtuel:
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux/macOS
+source venv/bin/activate
+```
+
+3. Installer les dépendances:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Configurer les variables d'environnement:
+
+```bash
+# Copier le fichier exemple
+copy .env.example .env  # Windows
+cp .env.example .env    # Linux/macOS
+
+# Éditer .env avec vos configurations
+```
+
+Exemple de configuration `.env`:
+
+```env
+DATABASE_URL=postgresql://smartdoc_user:votre_mot_de_passe@localhost:5432/smartdoc_db
+HOST=0.0.0.0
+PORT=8000
+STORAGE_PATH=./storage/documents
+TESSERACT_CMD=C:/Program Files/Tesseract-OCR/tesseract.exe
+OCR_LANGUAGE=fra
+```
+
+5. Entraîner le modèle de Machine Learning:
+
+```bash
+python ml/train_model.py
+```
+
+Cette commande va:
+- Créer les fichiers `model.pkl` et `vectorizer.pkl`
+- Afficher les métriques de performance
+- Tester quelques prédictions
+
+6. Lancer le serveur backend:
+
+```bash
+python main.py
+```
+
+Le serveur démarre sur `http://localhost:8000`
+
+Documentation API disponible sur:
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+### Installation Frontend
+
+1. Naviguer vers le dossier frontend:
+
+```bash
+cd frontend
+```
+
+2. Installer les dépendances:
+
+```bash
+npm install
+```
+
+3. Lancer le serveur de développement:
+
+```bash
+npm run dev
+```
+
+L'application démarre sur `http://localhost:3000`
+
+## 📖 Utilisation
+
+### 1. Upload de Documents
+
+1. Accéder à la page d'upload (`/`)
+2. Glisser-déposer un fichier ou cliquer pour sélectionner
+3. Cliquer sur "Analyser le document"
+4. Le système effectue automatiquement:
+   - Upload du fichier
+   - Extraction OCR du texte
+   - Classification par IA
+5. Voir les résultats détaillés
+
+### 2. Gestion des Documents
+
+1. Accéder à la page Documents (`/documents`)
+2. Visualiser tous les documents analysés
+3. Filtrer par catégorie, type ou nom
+4. Voir les détails de chaque document
+5. Supprimer des documents
+
+### 3. Tableau de Bord
+
+1. Accéder au Dashboard (`/dashboard`)
+2. Visualiser les statistiques globales:
+   - Nombre total de documents
+   - Documents récents
+   - Confiance moyenne de classification
+   - Total de mots extraits
+3. Voir les graphiques:
+   - Distribution par catégorie (Pie Chart)
+   - Documents par catégorie (Bar Chart)
+4. Exporter les données en CSV
+
+## 🤖 Classification IA
+
+Le système utilise un modèle de Machine Learning pour classifier automatiquement les documents en 5 catégories:
+
+1. **Facture** - Factures, devis, bons de commande
+2. **CV** - Curriculum Vitae, profils professionnels
+3. **Contrat** - Contrats de travail, conventions, accords
+4. **Lettre** - Lettres de motivation, correspondance
+5. **Autre** - Documents non classifiés
+
+### Algorithme
+
+- **TF-IDF** (Term Frequency-Inverse Document Frequency) pour la vectorisation
+- **Naive Bayes Multinomial** pour la classification
+- Score de confiance pour chaque prédiction
+
+### Performance
+
+Le modèle est entraîné sur des exemples en français et atteint généralement:
+- Précision globale: ~85-95%
+- Les catégories avec vocabulaire distinctif ont une meilleure performance
+
+## 📊 API REST
+
+### Endpoints Principaux
+
+#### Upload
+- `POST /api/upload` - Téléverser un document
+- `GET /api/documents` - Liste des documents
+- `GET /api/documents/{id}` - Détails d'un document
+- `DELETE /api/documents/{id}` - Supprimer un document
+
+#### OCR
+- `POST /api/ocr` - Effectuer l'OCR
+- `GET /api/ocr/languages` - Langues supportées
+
+#### Classification
+- `POST /api/classify` - Classifier un document
+- `POST /api/classify/batch` - Classifier plusieurs documents
+- `GET /api/classify/categories` - Liste des catégories
+
+#### Statistiques
+- `GET /api/stats` - Statistiques globales
+- `GET /api/stats/categories` - Stats par catégorie
+- `GET /api/stats/timeline` - Évolution temporelle
+- `GET /api/export/csv` - Export CSV
+- `GET /api/export/json` - Export JSON
+
+## 🔧 Configuration Avancée
+
+### Améliorer l'OCR
+
+Pour de meilleurs résultats OCR:
+
+1. Installer des packs de langues supplémentaires:
+```bash
+# Windows: Télécharger depuis GitHub Tesseract
+# Linux
+sudo apt-get install tesseract-ocr-eng tesseract-ocr-ara
+```
+
+2. Modifier `OCR_LANGUAGE` dans `.env`:
+```env
+OCR_LANGUAGE=fra+eng  # Français + Anglais
+```
+
+### Entraîner un Meilleur Modèle
+
+1. Ajouter plus d'exemples dans `backend/ml/train_model.py`
+2. Modifier les paramètres du modèle
+3. Réentraîner: `python ml/train_model.py`
+
+### Ajuster le Traitement d'Images
+
+Modifier les paramètres dans `backend/services/image_processing.py`:
+- Taille de blur
+- Seuils de binarisation
+- Résolution maximale
+
+## 🐛 Dépannage
+
+### Erreurs Communes
+
+**1. Tesseract non trouvé**
+```
+Error: Tesseract not found
+```
+Solution: Installer Tesseract et configurer `TESSERACT_CMD` dans `.env`
+
+**2. Connexion PostgreSQL échouée**
+```
+Error: Connection refused
+```
+Solution: Vérifier que PostgreSQL est démarré et que `DATABASE_URL` est correct
+
+**3. Module non trouvé**
+```
+ModuleNotFoundError: No module named 'X'
+```
+Solution: Réinstaller les dépendances `pip install -r requirements.txt`
+
+**4. CORS Error (Frontend)**
+```
+Access to XMLHttpRequest blocked by CORS
+```
+Solution: Vérifier que le backend est démarré et accessible
+
+## 📝 Améliorations Possibles
+
+- [ ] Authentification utilisateur
+- [ ] Support de plus de formats (DOCX, etc.)
+- [ ] Classification multi-label
+- [ ] Détection automatique de la langue
+- [ ] API de recherche full-text
+- [ ] Notifications en temps réel
+- [ ] Docker containerization
+- [ ] Tests unitaires et d'intégration
+- [ ] CI/CD pipeline
+
+## 👥 Auteurs
+
+Projet académique réalisé dans le cadre du cursus ENSET 2024.
+
+## 📄 Licence
+
+Projet académique - Usage éducatif uniquement.
+
+## 🙏 Remerciements
+
+- FastAPI pour le framework backend
+- Tesseract OCR pour l'extraction de texte
+- scikit-learn pour le Machine Learning
+- React et Tailwind pour l'interface utilisateur
+
+---
+
+**Note**: Ce projet est destiné à des fins pédagogiques. Pour une utilisation en production, des améliorations de sécurité et de performance sont recommandées.
+
+Pour toute question ou problème, consultez la documentation API sur `/docs` ou créez une issue.
+
+🚀 **Bon développement !**
