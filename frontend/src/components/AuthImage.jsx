@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { FiImage } from 'react-icons/fi';
 import authService from '../services/authService';
 
 const AuthImage = ({ src, alt, className, onError }) => {
@@ -58,7 +59,7 @@ const AuthImage = ({ src, alt, className, onError }) => {
   if (error || !imageSrc) {
     return (
       <div className={`${className} flex items-center justify-center bg-gray-100`}>
-        <span className="text-3xl">🖼️</span>
+        <FiImage className="text-3xl text-gray-400" />
       </div>
     );
   }

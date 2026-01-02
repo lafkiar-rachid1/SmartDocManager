@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { FiUploadCloud, FiCheckCircle, FiClock } from 'react-icons/fi';
 
 const FileUpload = ({ onFileSelect, isLoading }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -104,8 +105,14 @@ const FileUpload = ({ onFileSelect, isLoading }) => {
         
         <div className="text-center">
           {/* Icône */}
-          <div className="text-6xl mb-4">
-            {isLoading ? '⏳' : selectedFile ? '✅' : '📤'}
+          <div className="mb-4 flex justify-center">
+            {isLoading ? (
+              <FiClock className="text-6xl text-blue-600 animate-pulse" />
+            ) : selectedFile ? (
+              <FiCheckCircle className="text-6xl text-green-600" />
+            ) : (
+              <FiUploadCloud className="text-6xl text-gray-400" />
+            )}
           </div>
           
           {/* Texte */}

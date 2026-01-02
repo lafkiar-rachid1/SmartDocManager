@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { FiFile, FiImage, FiFileText, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import AuthImage from './AuthImage';
 
 const DocumentCard = ({ document, onDelete, onViewDetails }) => {
@@ -14,13 +15,14 @@ const DocumentCard = ({ document, onDelete, onViewDetails }) => {
   
   // Fonction pour obtenir l'icône selon le type de fichier
   const getFileIcon = (fileType) => {
+    const iconClass = "text-3xl text-indigo-600";
     switch (fileType) {
       case 'PDF':
-        return '📄';
+        return <FiFile className={iconClass} />;
       case 'IMAGE':
-        return '🖼️';
+        return <FiImage className={iconClass} />;
       default:
-        return '📋';
+        return <FiFileText className={iconClass} />;
     }
   };
   
@@ -134,7 +136,7 @@ const DocumentCard = ({ document, onDelete, onViewDetails }) => {
       {document.extracted_text && (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 mb-4 border border-blue-100">
           <p className="text-xs text-blue-600 mb-2 font-bold flex items-center">
-            <span className="mr-1">📝</span> Aperçu du texte:
+            <FiEdit3 className="mr-2" /> Aperçu du texte:
           </p>
           <p className="text-sm text-gray-700 line-clamp-3 leading-relaxed">
             {document.extracted_text.substring(0, 150)}
@@ -147,15 +149,16 @@ const DocumentCard = ({ document, onDelete, onViewDetails }) => {
       <div className="flex space-x-3">
         <button
           onClick={() => onViewDetails(document)}
-          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+          className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center justify-center space-x-2"
         >
-          📋 Détails
+          <FiFileText />
+          <span>Détails</span>
         </button>
         <button
           onClick={() => onDelete(document.id)}
           className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
         >
-          🗑️
+          <FiTrash2 />
         </button>
       </div>
     </div>

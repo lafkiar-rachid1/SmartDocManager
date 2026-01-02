@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiUploadCloud, FiAlertCircle, FiFileText, FiCheckCircle, FiX } from 'react-icons/fi';
+import { FiUploadCloud, FiAlertCircle, FiFileText, FiCheckCircle, FiX, FiZap, FiCpu, FiDatabase } from 'react-icons/fi';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:8000';
@@ -103,7 +103,7 @@ function Accueil() {
               <div className="flex items-center space-x-3">
                 <FiAlertCircle className="text-2xl flex-shrink-0" />
                 <div>
-                  <p className="font-semibold">⚠️ Mode Visiteur - Aucune Sauvegarde</p>
+                  <p className="font-semibold">Mode Visiteur - Aucune Sauvegarde</p>
                   <p className="text-sm text-amber-50">
                     Vos documents ne sont pas sauvegardés. Dès que vous quittez cette page, tout est effacé. 
                     <Link to="/register" className="ml-2 underline font-semibold hover:text-white">
@@ -281,7 +281,7 @@ function Accueil() {
                 <div className="flex items-start space-x-3">
                   <FiAlertCircle className="text-amber-600 text-xl flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-amber-900 mb-2">⚠️ Résultat temporaire</p>
+                    <p className="font-semibold text-amber-900 mb-2">Résultat temporaire</p>
                     <p className="text-amber-800 text-sm">
                       Ce document n'a pas été sauvegardé. Pour conserver vos analyses et accéder à l'historique complet,
                       <Link to="/register" className="ml-1 font-semibold underline hover:text-amber-900">
@@ -304,20 +304,26 @@ function Accueil() {
 
         {/* Section avantages */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white/60 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-200">
-            <div className="text-4xl mb-3">🚀</div>
-            <h3 className="font-bold text-gray-900 mb-2">Analyse rapide</h3>
-            <p className="text-gray-600 text-sm">Classification automatique en quelques secondes</p>
+          <div className="group bg-white/80 backdrop-blur-xl rounded-2xl p-8 text-center border-2 border-gray-200 hover:border-indigo-400 hover:shadow-xl transition-all duration-300">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <FiZap className="text-3xl text-indigo-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Analyse rapide</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">Classification automatique en quelques secondes grâce à notre moteur d'IA optimisé</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-200">
-            <div className="text-4xl mb-3">🤖</div>
-            <h3 className="font-bold text-gray-900 mb-2">Intelligence artificielle</h3>
-            <p className="text-gray-600 text-sm">Modèle ML entraîné sur des milliers de documents</p>
+          <div className="group bg-white/80 backdrop-blur-xl rounded-2xl p-8 text-center border-2 border-gray-200 hover:border-indigo-400 hover:shadow-xl transition-all duration-300">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <FiCpu className="text-3xl text-purple-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Intelligence artificielle</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">Modèle de Machine Learning entraîné sur des milliers de documents professionnels</p>
           </div>
-          <div className="bg-white/60 backdrop-blur-xl rounded-2xl p-6 text-center border border-gray-200">
-            <div className="text-4xl mb-3">💾</div>
-            <h3 className="font-bold text-gray-900 mb-2">Stockage sécurisé</h3>
-            <p className="text-gray-600 text-sm">Inscrivez-vous pour sauvegarder vos documents</p>
+          <div className="group bg-white/80 backdrop-blur-xl rounded-2xl p-8 text-center border-2 border-gray-200 hover:border-indigo-400 hover:shadow-xl transition-all duration-300">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-100 to-teal-100 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <FiDatabase className="text-3xl text-green-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">Stockage sécurisé</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">Créez un compte pour sauvegarder vos documents et accéder à l'historique complet</p>
           </div>
         </div>
       </div>

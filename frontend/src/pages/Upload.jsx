@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { FiUpload, FiEye, FiCpu, FiCheckCircle } from 'react-icons/fi';
 import FileUpload from '../components/FileUpload';
 import { uploadDocument, performOCR, classifyDocument } from '../services/api';
 
@@ -16,10 +17,10 @@ const Upload = () => {
   
   // Étapes du processus
   const steps = [
-    { id: 1, name: 'Upload', icon: '📤', description: 'Téléversement du fichier' },
-    { id: 2, name: 'OCR', icon: '👁️', description: 'Extraction du texte' },
-    { id: 3, name: 'Classification', icon: '🤖', description: 'Classification IA' },
-    { id: 4, name: 'Terminé', icon: '✅', description: 'Traitement terminé' },
+    { id: 1, name: 'Upload', icon: FiUpload, description: 'Téléversement du fichier' },
+    { id: 2, name: 'OCR', icon: FiEye, description: 'Extraction du texte' },
+    { id: 3, name: 'Classification', icon: FiCpu, description: 'Classification IA' },
+    { id: 4, name: 'Terminé', icon: FiCheckCircle, description: 'Traitement terminé' },
   ];
   
   // Gérer le processus complet
