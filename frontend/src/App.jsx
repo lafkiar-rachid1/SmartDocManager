@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
+import Accueil from './pages/Accueil';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Upload from './pages/Upload';
@@ -47,6 +48,10 @@ function App() {
     };
   }, []);
 
+  // Debug: afficher l'état d'authentification
+  console.log('🔐 État authentification:', isAuthenticated);
+  console.log('📍 URL actuelle:', window.location.pathname);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -67,19 +72,25 @@ function App() {
         {/* Contenu principal */}
         <main>
           <Routes>
+            {/* Route d'accueil publique */}
+            <Route 
+              path="/" 
+              element={isAuthenticated ? <Navigate to="/upload" /> : <Accueil />} 
+            />
+
             {/* Routes publiques */}
             <Route 
               path="/login" 
-              element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
+              element={isAuthenticated ? <Navigate to="/upload" /> : <Login />} 
             />
             <Route 
               path="/register" 
-              element={isAuthenticated ? <Navigate to="/" /> : <Register />} 
+              element={isAuthenticated ? <Navigate to="/upload" /> : <Register />} 
             />
 
             {/* Routes protégées */}
             <Route 
-              path="/" 
+              path="/upload" 
               element={
                 <PrivateRoute>
                   <Upload />

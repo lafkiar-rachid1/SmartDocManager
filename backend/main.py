@@ -10,7 +10,7 @@ import os
 from dotenv import load_dotenv
 
 # Importer les routes API
-from api import upload, ocr, classify, stats, auth
+from api import upload, ocr, classify, stats, auth, guest
 
 # Importer les modèles et la base de données
 from database import engine, Base
@@ -52,6 +52,7 @@ app.mount("/storage", StaticFiles(directory="storage"), name="storage")
 
 # Enregistrer les routes de l'API
 app.include_router(auth.router, prefix="/api", tags=["Authentication"])
+app.include_router(guest.router, prefix="/api", tags=["Guest"])
 app.include_router(upload.router, prefix="/api", tags=["Upload"])
 app.include_router(ocr.router, prefix="/api", tags=["OCR"])
 app.include_router(classify.router, prefix="/api", tags=["Classification"])
