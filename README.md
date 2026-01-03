@@ -6,7 +6,7 @@ Un projet académique full-stack complet permettant de téléverser des document
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-green.svg)
-![React](https://img.shields.io/badge/React-18.2-61dafb.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.31-FF4B4B.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue.svg)
 
 ## 🎯 Objectifs du Projet
@@ -30,12 +30,11 @@ Un projet académique full-stack complet permettant de téléverser des document
 - **scikit-learn** - Machine Learning (TF-IDF + Naive Bayes)
 
 ### Frontend
-- **React 18** - Bibliothèque UI
-- **Vite** - Build tool rapide
-- **Tailwind CSS** - Framework CSS utilitaire
-- **Axios** - Client HTTP
-- **Recharts** - Graphiques et visualisations
-- **React Router** - Navigation
+- **Streamlit 1.31** - Framework web Python pour data apps
+- **Plotly Express** - Graphiques interactifs
+- **Pandas** - Manipulation de données
+- **Pillow** - Traitement d'images
+- **Requests** - Client HTTP
 
 ## 📁 Structure du Projet
 
@@ -67,29 +66,24 @@ SmartDocManager/
 │   │
 │   └── storage/documents/     # Fichiers uploadés
 │
-└── frontend/
-    ├── src/
-    │   ├── pages/             # Pages principales
-    │   │   ├── Upload.jsx    # Page d'upload
-    │   │   ├── Documents.jsx # Liste des documents
-    │   │   └── Dashboard.jsx # Statistiques
-    │   │
-    │   ├── components/        # Composants réutilisables
-    │   │   ├── Navbar.jsx
-    │   │   ├── FileUpload.jsx
-    │   │   └── DocumentCard.jsx
-    │   │
-    │   ├── services/
-    │   │   └── api.js        # Service API
-    │   │
-    │   ├── App.jsx           # Composant principal
-    │   ├── main.jsx          # Point d'entrée
-    │   └── index.css         # Styles globaux
+└── frontendStreamlit/
+    ├── Accueil.py            # Page d'accueil (analyse visiteur)
+    ├── pages/                # Pages de l'application
+    │   ├── 0_Login.py       # Page de connexion
+    │   ├── 1_Register.py    # Page d'inscription
+    │   ├── 2_Upload.py      # Page d'upload authentifié
+    │   ├── 3_Documents.py   # Liste et gestion des documents
+    │   └── 4_Dashboard.py   # Statistiques et visualisations
     │
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    └── index.html
+    ├── services/             # Services backend
+    │   ├── auth_service.py  # Service d'authentification
+    │   └── api_service.py   # Service API REST
+    │
+    ├── .streamlit/
+    │   └── config.toml      # Configuration Streamlit
+    │
+    ├── requirements.txt     # Dépendances Python
+    └── README.md
 ```
 
 ## 🚀 Installation et Configuration
@@ -97,9 +91,8 @@ SmartDocManager/
 ### Prérequis
 
 1. **Python 3.9+**
-2. **Node.js 16+** et npm
-3. **PostgreSQL 12+**
-4. **Tesseract OCR**
+2. **PostgreSQL 12+**
+3. **Tesseract OCR**
    - Windows: Télécharger depuis [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
    - Linux: `sudo apt-get install tesseract-ocr tesseract-ocr-fra`
    - macOS: `brew install tesseract tesseract-lang`
@@ -184,61 +177,77 @@ Documentation API disponible sur:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
-### Installation Frontend
+### Installation Frontend Streamlit
 
-1. Naviguer vers le dossier frontend:
+1. Naviguer vers le dossier frontendStreamlit:
 
 ```bash
-cd frontend
+cd frontendStreamlit
 ```
 
 2. Installer les dépendances:
 
 ```bash
-npm install
+pip install -r requirements.txt
 ```
 
-3. Lancer le serveur de développement:
+3. Lancer l'application Streamlit:
 
 ```bash
-npm run dev
+streamlit run Accueil.py
 ```
 
-L'application démarre sur `http://localhost:3000`
+L'application démarre sur `http://localhost:8501`
 
 ## 📖 Utilisation
 
-### 1. Upload de Documents
+### 1. Mode Visiteur (Page d'Accueil)
 
-1. Accéder à la page d'upload (`/`)
+1. Ouvrir l'application sur `http://localhost:8501`
+2. Téléverser un document (analyse sans sauvegarde)
+3. Voir la catégorie détectée et le niveau de confiance
+4. **Note**: Les documents ne sont pas sauvegardés en mode visiteur
+
+### 2. Connexion / Inscription
+
+1. Cliquer sur "🔐 Connexion" ou "✨ Créer un compte"
+2. Créer un compte avec username, email et mot de passe
+3. Se connecter pour accéder aux fonctionnalités complètes
+
+### 3. Upload de Documents (Authentifié)
+
+1. Accéder à la page Upload (📤)
 2. Glisser-déposer un fichier ou cliquer pour sélectionner
-3. Cliquer sur "Analyser le document"
+3. Cliquer sur "🚀 Lancer l'analyse"
 4. Le système effectue automatiquement:
    - Upload du fichier
    - Extraction OCR du texte
    - Classification par IA
-5. Voir les résultats détaillés
+5. Voir les résultats détaillés (catégorie, confiance, texte extrait)
 
-### 2. Gestion des Documents
+### 4. Gestion des Documents
 
-1. Accéder à la page Documents (`/documents`)
-2. Visualiser tous les documents analysés
-3. Filtrer par catégorie, type ou nom
-4. Voir les détails de chaque document
-5. Supprimer des documents
+1. Accéder à la page Documents (📁)
+2. Visualiser tous vos documents sauvegardés
+3. Utiliser les filtres:
+   - Recherche par nom de fichier
+   - Filtrer par catégorie
+   - Filtrer par type de fichier
+4. Cliquer sur "👁️ Voir" pour les détails complets
+5. Supprimer des documents avec confirmation
 
-### 3. Tableau de Bord
+### 5. Tableau de Bord
 
-1. Accéder au Dashboard (`/dashboard`)
+1. Accéder au Dashboard (📊)
 2. Visualiser les statistiques globales:
    - Nombre total de documents
-   - Documents récents
+   - Documents des 7 derniers jours
    - Confiance moyenne de classification
-   - Total de mots extraits
-3. Voir les graphiques:
-   - Distribution par catégorie (Pie Chart)
-   - Documents par catégorie (Bar Chart)
-4. Exporter les données en CSV
+   - Nombre de catégories uniques
+3. Voir les graphiques interactifs (Plotly):
+   - Distribution par catégorie (Camembert)
+   - Documents par catégorie (Barres)
+   - Tableau récapitulatif des catégories
 
 ## 🤖 Classification IA
 
@@ -252,14 +261,36 @@ Le système utilise un modèle de Machine Learning pour classifier automatiqueme
 
 ### Algorithme
 
-- **TF-IDF** (Term Frequency-Inverse Document Frequency) pour la vectorisation
-- **Naive Bayes Multinomial** pour la classification
-- Score de confiance pour chaque prédiction
+Le système effectue une **comparaison automatique de plusieurs algorithmes** et sélectionne le meilleur :
+
+**Vectorisation :**
+- **TF-IDF** (Term Frequency-Inverse Document Frequency)
+  - N-grams : 1-3 (unigrammes, bigrammes, trigrammes)
+  - Max features : 5000
+  - Échelle logarithmique sublinear_tf
+
+**Algorithmes de Classification Testés :**
+1. **Naive Bayes Multinomial** - Rapide, performant pour le texte
+2. **Logistic Regression** - Robuste, bonne généralisation
+3. **Support Vector Machine (Linear)** - Excellent pour les espaces de haute dimension
+4. **Random Forest** - Ensemble learning, résiste bien à l'overfitting
+
+**Métriques d'Évaluation :**
+- Précision Train et Test
+- Cross-validation 5-fold
+- Détection automatique d'overfitting
+- Courbes ROC et AUC
+- Rapport de classification complet
+
+Le meilleur modèle est automatiquement sélectionné et sauvegardé.
 
 ### Performance
 
-Le modèle est entraîné sur des exemples en français et atteint généralement:
-- Précision globale: ~85-95%
+Le modèle est entraîné sur des exemples en français avec validation rigoureuse :
+- **Précision globale** : ~85-95%
+- **Cross-validation** : ±2-5% de stabilité
+- **Détection d'overfitting** : Surveillance de l'écart Train-Test
+- **Graphiques ROC** : Génération automatique pour analyse visuelle
 - Les catégories avec vocabulaire distinctif ont une meilleure performance
 
 ## 📊 API REST
@@ -341,15 +372,23 @@ ModuleNotFoundError: No module named 'X'
 ```
 Solution: Réinstaller les dépendances `pip install -r requirements.txt`
 
-**4. CORS Error (Frontend)**
+**4. Erreur de connexion API**
 ```
-Access to XMLHttpRequest blocked by CORS
+Error: Connection refused to http://localhost:8000
 ```
-Solution: Vérifier que le backend est démarré et accessible
+Solution: Vérifier que le backend FastAPI est démarré sur le port 8000
+
+**5. Streamlit ne démarre pas**
+```
+Streamlit command not found
+```
+Solution: Installer Streamlit `pip install streamlit` et vérifier que l'environnement virtuel est activé
 
 ## 📝 Améliorations Possibles
 
-- [ ] Authentification utilisateur
+- [x] Authentification utilisateur (JWT)
+- [x] Interface Streamlit moderne et responsive
+- [x] Mode visiteur pour analyse sans inscription
 - [ ] Support de plus de formats (DOCX, etc.)
 - [ ] Classification multi-label
 - [ ] Détection automatique de la langue
@@ -358,6 +397,8 @@ Solution: Vérifier que le backend est démarré et accessible
 - [ ] Docker containerization
 - [ ] Tests unitaires et d'intégration
 - [ ] CI/CD pipeline
+- [ ] Export PDF des documents analysés
+- [ ] Historique des modifications
 
 ## 👥 Auteurs
 
@@ -369,10 +410,11 @@ Projet académique - Usage éducatif uniquement.
 
 ## 🙏 Remerciements
 
-- FastAPI pour le framework backend
-- Tesseract OCR pour l'extraction de texte
-- scikit-learn pour le Machine Learning
-- React et Tailwind pour l'interface utilisateur
+- FastAPI pour le framework backend rapide et moderne
+- Tesseract OCR pour l'extraction de texte performante
+- scikit-learn pour les outils de Machine Learning
+- Streamlit pour l'interface utilisateur intuitive et rapide à développer
+- Plotly pour les visualisations interactives
 
 ---
 
