@@ -78,7 +78,8 @@ async def upload_document(
             message="Document téléversé avec succès",
             document_id=db_document.id,
             filename=file.filename,
-            filepath=file_path
+            filepath=file_path,
+            file_type=file_type
         )
         
     except Exception as e:

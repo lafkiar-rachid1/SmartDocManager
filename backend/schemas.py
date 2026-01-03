@@ -62,6 +62,7 @@ class UploadResponse(BaseModel):
     document_id: int
     filename: str
     filepath: str
+    file_type: str
 
 # ========== Schémas pour l'OCR ==========
 
