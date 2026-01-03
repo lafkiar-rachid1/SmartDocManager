@@ -37,20 +37,21 @@ st.markdown("""
         background-color: #1E293B;
         padding: 0;
         border-radius: 1.2rem;
-        border: 4px solid #000000;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3);
-        margin: 2.5rem;
-        margin-bottom: 4.5rem;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Remplacement de la bordure noire par une bordure claire subtile */
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        margin: 1rem;
+        margin-bottom: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
         position: relative;
     }
     
     .doc-card:hover {
-        transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 32px 60px rgba(0, 0, 0, 0.6), 0 16px 28px rgba(139, 92, 246, 0.2);
+        transform: translateY(-5px);
+        /* Bordure colorée au survol */
         border-color: #8B5CF6;
-        border-width: 5px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(139, 92, 246, 0.2);
     }
     
     .doc-card::before {
@@ -60,9 +61,9 @@ st.markdown("""
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(109, 40, 217, 0.1) 100%);
+        background: linear-gradient(to bottom, rgba(139, 92, 246, 0.05), transparent);
         opacity: 0;
-        transition: opacity 0.4s ease;
+        transition: opacity 0.3s ease;
         z-index: 0;
         pointer-events: none;
     }
@@ -419,7 +420,7 @@ st.markdown("""
 <h2 class='section-title'>🔍 Filtres de Recherche</h2>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="filter-section">', unsafe_allow_html=True)
+
 
 col1, col2, col3 = st.columns(3, gap="large")
 
@@ -471,7 +472,7 @@ with col3:
     if file_type != st.session_state.filter_type:
         st.session_state.filter_type = file_type
 
-st.markdown('</div>', unsafe_allow_html=True)
+
 
 # Liste des documents
 if not st.session_state.documents:

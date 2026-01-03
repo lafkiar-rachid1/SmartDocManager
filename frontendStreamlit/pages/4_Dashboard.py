@@ -322,7 +322,7 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
     
     # Graphique en camembert - Distribution par catégorie
     with col_chart1:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+
         st.markdown('<div class="chart-title">🥧 Distribution par Catégorie</div>', unsafe_allow_html=True)
         
         if stats.get('documents_by_category'):
@@ -369,11 +369,11 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
         else:
             st.info("📊 Pas de données disponibles")
         
-        st.markdown('</div>', unsafe_allow_html=True)
+
     
     # Graphique en barres - Documents par catégorie
     with col_chart2:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+
         st.markdown('<div class="chart-title">📊 Documents par Catégorie</div>', unsafe_allow_html=True)
         
         if categories_data:
@@ -420,7 +420,7 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
         else:
             st.info("📊 Pas de données disponibles")
         
-        st.markdown('</div>', unsafe_allow_html=True)
+
     
     st.markdown("<br>", unsafe_allow_html=True)
     
