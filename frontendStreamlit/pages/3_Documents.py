@@ -20,81 +20,237 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS personnalisé
+# CSS personnalisé - Design moderne sur fond blanc
 st.markdown("""
 <style>
-    /* Style général */
+    /* Fond principal BLANC */
+    .stApp {
+        background-color: #f8fafc !important;
+    }
+    
     .main {
-        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+        background-color: #f8fafc !important;
     }
     
     /* Cartes de documents */
     .doc-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-        backdrop-filter: blur(10px);
-        padding: 1.5rem;
+        background-color: #ffffff;
+        padding: 0;
         border-radius: 1rem;
-        border: 1px solid rgba(255,255,255,0.3);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-bottom: 1rem;
-        transition: all 0.3s;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        overflow: hidden;
     }
     
     .doc-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        border-color: #667eea;
+    }
+    
+    /* En-tête de carte */
+    .card-header {
+        height: 200px;
+        background: #667eea;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 3px solid #5a67d8;
+    }
+    
+    .card-header.pdf {
+        background: #f43f5e;
+        border-bottom-color: #e11d48;
+    }
+    
+    .card-header.image {
+        background: #10b981;
+        border-bottom-color: #059669;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+        background-color: #ffffff;
     }
     
     /* Filtres */
     .filter-section {
-        background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%);
-        backdrop-filter: blur(15px);
+        background-color: #ffffff;
         padding: 2rem;
-        border-radius: 1.5rem;
-        border: 1px solid rgba(255,255,255,0.3);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-radius: 1rem;
+        border: 2px solid #e2e8f0;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         margin-bottom: 2rem;
     }
     
     /* Badges */
-    .category-badge {
-        display: inline-block;
+    .badge-container {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
         padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        font-size: 0.9rem;
+        border-radius: 1.5rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        transition: all 0.3s;
     }
     
-    .confidence-high {
-        color: #10b981;
-        background: rgba(16, 185, 129, 0.1);
+    .badge:hover {
+        transform: translateY(-2px);
     }
     
-    .confidence-medium {
-        color: #f59e0b;
-        background: rgba(245, 158, 11, 0.1);
-    }
-    
-    .confidence-low {
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.1);
-    }
-    
-    /* Modal */
-    .modal-header {
-        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    .badge-category {
+        background-color: #667eea;
         color: white;
+    }
+    
+    .badge-type {
+        background-color: #f43f5e;
+        color: white;
+    }
+    
+    .badge-confidence-high {
+        background-color: #10b981;
+        color: white;
+    }
+    
+    .badge-confidence-medium {
+        background-color: #f59e0b;
+        color: white;
+    }
+    
+    .badge-confidence-low {
+        background-color: #ef4444;
+        color: white;
+    }
+    
+    /* Aperçu du texte */
+    .text-preview {
+        background-color: #f1f5f9;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        border-left: 4px solid #667eea;
+        margin: 1rem 0;
+        color: #334155;
+        font-size: 0.9rem;
+        font-style: italic;
+        line-height: 1.6;
+    }
+    
+    .text-preview-title {
+        color: #667eea;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    /* Titre de document */
+    .doc-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin: 1rem 0;
+        text-align: center;
+        line-height: 1.4;
+    }
+    
+    .doc-date {
+        text-align: center;
+        color: #64748b;
+        font-size: 0.85rem;
+        margin: 0.5rem 0;
+    }
+    
+    /* Stats card */
+    .stats-card {
+        background-color: #ffffff;
         padding: 1.5rem;
-        border-radius: 1rem 1rem 0 0;
+        border-radius: 1rem;
+        border: 2px solid #667eea;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+    }
+    
+    .stats-number {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #667eea;
+    }
+    
+    .stats-label {
+        font-size: 1.1rem;
+        color: #1e293b;
+        font-weight: 700;
+    }
+    
+    /* Titres */
+    .page-title {
+        font-size: 4rem;
+        font-weight: 900;
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+    }
+    
+    .page-subtitle {
+        font-size: 1.2rem;
+        color: #475569;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Info box dans modal */
+    .info-box {
+        background-color: #f8fafc;
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+        border: 2px solid #e2e8f0;
         margin-bottom: 1rem;
     }
     
-    .info-box {
-        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-        padding: 1rem;
-        border-radius: 0.75rem;
-        border: 1px solid rgba(79, 70, 229, 0.2);
-        margin-bottom: 0.75rem;
+    .info-box-label {
+        color: #667eea;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .info-box-value {
+        color: #1e293b;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    
+    /* Boutons */
+    .stButton button {
+        border-radius: 1rem !important;
+        font-weight: 700 !important;
+        transition: all 0.3s !important;
+        border: none !important;
+    }
+    
+    .stButton button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -173,12 +329,15 @@ def delete_document(document_id):
 if st.session_state.documents is None:
     load_documents()
 
-# En-tête avec design amélioré
+# En-tête moderne et simple
 st.markdown("""
-<div style='text-align: center; margin-bottom: 2rem;'>
-    <h1 style='font-size: 4rem; font-weight: 900; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;'>
+<div style='text-align: center; margin-bottom: 3rem; padding: 2rem 0;'>
+    <h1 class='page-title'>
         📁 Mes Documents
     </h1>
+    <p class='page-subtitle'>
+        Gérez vos documents avec style ✨
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -188,9 +347,17 @@ filtered_docs = filter_documents()
 col_stat, col_btn = st.columns([4, 1])
 with col_stat:
     st.markdown(f"""
-    <div style='background: linear-gradient(135deg, #60a5fa 0%, #6366f1 100%); padding: 1rem 2rem; border-radius: 1rem; color: white; text-align: center;'>
-        <h2 style='margin: 0; font-size: 2rem; font-weight: 800;'>{len(filtered_docs)}</h2>
-        <p style='margin: 0; font-size: 1.1rem; opacity: 0.9;'>Document(s) trouvé(s)</p>
+    <div class='stats-card' style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; padding: 2rem;'>
+        <div style='display: flex; align-items: center; justify-content: space-between;'>
+            <div style='display: flex; align-items: center; gap: 2rem;'>
+                <div style='font-size: 5rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));'>📊</div>
+                <div style='text-align: left;'>
+                    <div style='font-size: 3.5rem; font-weight: 900; color: white; line-height: 1; margin-bottom: 0.5rem;'>{len(filtered_docs)}</div>
+                    <div style='font-size: 1.3rem; color: rgba(255,255,255,0.95); font-weight: 700;'>Document(s) trouvé(s)</div>
+                </div>
+            </div>
+            <div style='font-size: 6rem; opacity: 0.1; color: white;'>📁</div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 with col_btn:
@@ -199,13 +366,9 @@ with col_btn:
         load_documents()
         st.rerun()
 
-# Section des filtres avec design amélioré
+# Section des filtres
 st.markdown("""
-<div style='margin: 2rem 0;'>
-    <h2 style='font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;'>
-        🔍 Filtres de Recherche
-    </h2>
-</div>
+<h2 class='section-title'>🔍 Filtres de Recherche</h2>
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="filter-section">', unsafe_allow_html=True)
@@ -282,71 +445,156 @@ else:
                 if i + j < len(filtered_docs):
                     doc = filtered_docs[i + j]
                     with cols[j]:
-                        # Carte de document avec design amélioré
-                        # Icône selon le type
-                        icon = "📄"
-                        icon_color = "#3b82f6"
-                        if doc.get('file_type') == 'PDF':
-                            icon = "📕"
-                            icon_color = "#ef4444"
-                        elif doc.get('file_type') == 'IMAGE':
-                            icon = "🖼️"
-                            icon_color = "#10b981"
+                        # Carte de document avec design WOW
+                        st.markdown('<div class="doc-card">', unsafe_allow_html=True)
                         
-                        # Nom du fichier tronqué
-                        filename = doc.get('filename', 'Sans nom')
-                        display_name = filename[:30] + '...' if len(filename) > 30 else filename
-                        
-                        # Badge de confiance avec couleur
-                        confidence = (doc.get('confidence') or 0) * 100
-                        if confidence >= 80:
-                            conf_color = "#10b981"
-                            conf_bg = "rgba(16, 185, 129, 0.1)"
-                        elif confidence >= 60:
-                            conf_color = "#f59e0b"
-                            conf_bg = "rgba(245, 158, 11, 0.1)"
-                        else:
-                            conf_color = "#ef4444"
-                            conf_bg = "rgba(239, 68, 68, 0.1)"
-                        
-                        st.markdown(f"""
-                        <div class='doc-card'>
-                            <div style='text-align: center; margin-bottom: 1rem;'>
-                                <div style='font-size: 3.5rem; margin-bottom: 0.5rem;'>{icon}</div>
-                                <h3 style='margin: 0; font-size: 1.1rem; font-weight: 700; color: #1f2937;'>{display_name}</h3>
+                        # En-tête avec aperçu image ou icône
+                        file_type = doc.get('file_type', 'UNKNOWN')
+                        if file_type == 'IMAGE':
+                            # Essayer d'afficher l'image
+                            try:
+                                import requests
+                                from PIL import Image
+                                from io import BytesIO
+                                import base64
+                                
+                                headers = AuthService.get_headers()
+                                response = requests.get(
+                                    f"http://localhost:8000/api/documents/{doc['id']}/image",
+                                    headers=headers
+                                )
+                                
+                                if response.status_code == 200:
+                                    image = Image.open(BytesIO(response.content))
+                                    # Redimensionner pour l'aperçu
+                                    image.thumbnail((400, 200))
+                                    buffered = BytesIO()
+                                    image.save(buffered, format="PNG")
+                                    img_str = base64.b64encode(buffered.getvalue()).decode()
+                                    
+                                    st.markdown(f"""
+                                    <div class='card-header image' style='padding: 0;'>
+                                        <img src='data:image/png;base64,{img_str}' style='width: 100%; height: 100%; object-fit: cover;'>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                else:
+                                    st.markdown("""
+                                    <div class='card-header image'>
+                                        <div style='font-size: 5rem;'>🖼️</div>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                            except:
+                                st.markdown("""
+                                <div class='card-header image'>
+                                    <div style='font-size: 5rem;'>🖼️</div>
+                                </div>
+                                """, unsafe_allow_html=True)
+                        elif file_type == 'PDF':
+                            st.markdown("""
+                            <div class='card-header pdf'>
+                                <div style='font-size: 5rem;'>📕</div>
                             </div>
+                            """, unsafe_allow_html=True)
+                        else:
+                            st.markdown("""
+                            <div class='card-header'>
+                                <div style='font-size: 5rem;'>📄</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        
+                        # Corps de la carte
+                        st.markdown('<div class="card-body">', unsafe_allow_html=True)
+                        
+                        # Titre du document
+                        filename = doc.get('filename', 'Sans nom')
+                        display_name = filename[:35] + '...' if len(filename) > 35 else filename
+                        st.markdown(f"""
+                        <div class='doc-title'>{display_name}</div>
                         """, unsafe_allow_html=True)
                         
-                        # Catégorie
+                        # Badges
+                        st.markdown('<div class="badge-container">', unsafe_allow_html=True)
+                        
+                        # Badge catégorie
                         if doc.get('category'):
                             st.markdown(f"""
-                            <div style='text-align: center; margin: 1rem 0;'>
-                                <span style='background: linear-gradient(135deg, #60a5fa 0%, #6366f1 100%); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.9rem;'>
-                                    📁 {doc['category']}
-                                </span>
-                            </div>
+                            <span class='badge badge-category'>
+                                <span>📁</span>
+                                <span>{doc['category']}</span>
+                            </span>
                             """, unsafe_allow_html=True)
                         
-                        # Confiance
+                        # Badge type
+                        if file_type:
+                            type_icon = "📕" if file_type == "PDF" else "🖼️" if file_type == "IMAGE" else "📄"
+                            st.markdown(f"""
+                            <span class='badge badge-type'>
+                                <span>{type_icon}</span>
+                                <span>{file_type}</span>
+                            </span>
+                            """, unsafe_allow_html=True)
+                        
+                        st.markdown('</div>', unsafe_allow_html=True)
+                        
+                        # Badge confiance
                         if doc.get('confidence') is not None:
+                            confidence = doc['confidence'] * 100
+                            if confidence >= 80:
+                                badge_class = "badge-confidence-high"
+                            elif confidence >= 60:
+                                badge_class = "badge-confidence-medium"
+                            else:
+                                badge_class = "badge-confidence-low"
+                            
                             st.markdown(f"""
                             <div style='text-align: center; margin: 1rem 0;'>
-                                <span style='background: {conf_bg}; color: {conf_color}; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.9rem;'>
-                                    ⭐ {confidence:.1f}%
+                                <span class='badge {badge_class}'>
+                                    <span>⭐</span>
+                                    <span>Confiance: {confidence:.1f}%</span>
                                 </span>
                             </div>
                             """, unsafe_allow_html=True)
                         
-                        st.markdown("</div>", unsafe_allow_html=True)
+                        # Date
+                        if doc.get('created_at'):
+                            from datetime import datetime
+                            try:
+                                date_obj = datetime.fromisoformat(doc['created_at'].replace('Z', '+00:00'))
+                                date_str = date_obj.strftime('%d/%m/%Y %H:%M')
+                                st.markdown(f"""
+                                <div class='doc-date'>
+                                    📅 {date_str}
+                                </div>
+                                """, unsafe_allow_html=True)
+                            except:
+                                pass
                         
-                        # Boutons d'action
+                        # Aperçu du texte
+                        if doc.get('extracted_text'):
+                            preview = doc['extracted_text'][:120].strip()
+                            if len(doc['extracted_text']) > 120:
+                                preview += "..."
+                            st.markdown(f"""
+                            <div class='text-preview'>
+                                <div class='text-preview-title'>
+                                    <span>📝</span>
+                                    <span>Aperçu:</span>
+                                </div>
+                                <div>"{preview}"</div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                        
+                        st.markdown('</div>', unsafe_allow_html=True)  # Fin card-body
+                        
+                        # Boutons d'action avec design moderne
+                        st.markdown("<div style='padding: 0 1rem 1rem 1rem;'>", unsafe_allow_html=True)
                         col_btn1, col_btn2 = st.columns(2, gap="small")
                         with col_btn1:
-                            if st.button("👁️ Voir", key=f"view_{doc['id']}", use_container_width=True, type="primary"):
+                            if st.button("👁️ Détails", key=f"view_{doc['id']}", use_container_width=True, type="primary"):
                                 st.session_state.selected_document = doc
                                 st.rerun()
                         with col_btn2:
-                            if st.button("🗑️", key=f"delete_{doc['id']}", use_container_width=True):
+                            if st.button("🗑️ Supprimer", key=f"delete_{doc['id']}", use_container_width=True):
                                 if st.session_state.get(f'confirm_delete_{doc["id"]}'):
                                     delete_document(doc['id'])
                                 else:
@@ -355,17 +603,17 @@ else:
                         
                         # Confirmation de suppression
                         if st.session_state.get(f'confirm_delete_{doc["id"]}'):
-                            st.warning("⚠️ Confirmer ?")
+                            st.warning("⚠️ Êtes-vous sûr ?")
                             col_conf1, col_conf2 = st.columns(2)
                             with col_conf1:
-                                if st.button("✅", key=f"yes_{doc['id']}", use_container_width=True):
+                                if st.button("✅ Oui", key=f"yes_{doc['id']}", use_container_width=True):
                                     delete_document(doc['id'])
                             with col_conf2:
-                                if st.button("❌", key=f"no_{doc['id']}", use_container_width=True):
+                                if st.button("❌ Non", key=f"no_{doc['id']}", use_container_width=True):
                                     del st.session_state[f'confirm_delete_{doc["id"]}']
                                     st.rerun()
                         
-                        st.markdown('</div>', unsafe_allow_html=True)
+                        st.markdown('</div></div>', unsafe_allow_html=True)  # Fin padding + doc-card
 
 # Modal de détails du document
 if st.session_state.selected_document:
@@ -397,45 +645,92 @@ if st.session_state.selected_document:
             
             st.markdown("<br>", unsafe_allow_html=True)
         
-        # Informations principales
+        # Badges en haut
+        file_type = doc.get('file_type', 'N/A')
+        category = doc.get('category', '')
+        
+        badge_html = f"""
+        <div style='display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;'>
+        """
+        
+        # Badge type de fichier
+        if file_type == 'PDF':
+            badge_html += f"""
+            <div style='background-color: #ef4444; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);'>
+                <span style='font-size: 1.5rem;'>📕</span>
+                <span>PDF</span>
+            </div>
+            """
+        elif file_type == 'IMAGE':
+            badge_html += f"""
+            <div style='background-color: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);'>
+                <span style='font-size: 1.5rem;'>🖼️</span>
+                <span>IMAGE</span>
+            </div>
+            """
+        else:
+            badge_html += f"""
+            <div style='background-color: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);'>
+                <span style='font-size: 1.5rem;'>📄</span>
+                <span>{file_type}</span>
+            </div>
+            """
+        
+        # Badge catégorie
+        if category:
+            badge_html += f"""
+            <div style='background-color: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);'>
+                <span style='font-size: 1.5rem;'>📁</span>
+                <span>{category}</span>
+            </div>
+            """
+        
+        # Badge confiance
+        if doc.get('confidence') is not None:
+            confidence_value = doc.get('confidence') * 100
+            if confidence_value >= 80:
+                conf_bg = "#10b981"
+            elif confidence_value >= 60:
+                conf_bg = "#f59e0b"
+            else:
+                conf_bg = "#ef4444"
+            
+            badge_html += f"""
+            <div style='background-color: {conf_bg}; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);'>
+                <span style='font-size: 1.5rem;'>⭐</span>
+                <span>Confiance: {confidence_value:.1f}%</span>
+            </div>
+            """
+        
+        # Badge date
+        if doc.get('created_at'):
+            from datetime import datetime
+            try:
+                date_obj = datetime.fromisoformat(doc['created_at'].replace('Z', '+00:00'))
+                date_str = date_obj.strftime('%d/%m/%Y %H:%M')
+                badge_html += f"""
+                <div style='background-color: #64748b; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3);'>
+                    <span style='font-size: 1.5rem;'>📅</span>
+                    <span>{date_str}</span>
+                </div>
+                """
+            except:
+                pass
+        
+        badge_html += "</div>"
+        st.markdown(badge_html, unsafe_allow_html=True)
+        
+        # Informations détaillées
         st.markdown("### 📋 Informations")
         
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown(f"""
-            <div class='info-box'>
-                <p style='color: #4F46E5; font-weight: bold; margin-bottom: 0.5rem;'>📎 Nom du fichier</p>
-                <p style='font-weight: bold; font-size: 1.1rem; margin: 0;'>{doc.get('filename', 'N/A')}</p>
+        st.markdown(f"""
+        <div style='background-color: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 2px solid #e2e8f0; margin-bottom: 1rem;'>
+            <div style='margin-bottom: 1rem;'>
+                <span style='color: #64748b; font-weight: 600; font-size: 0.9rem;'>📎 NOM DU FICHIER</span>
+                <p style='color: #1e293b; font-weight: 700; font-size: 1.2rem; margin: 0.5rem 0 0 0;'>{doc.get('filename', 'N/A')}</p>
             </div>
-            """, unsafe_allow_html=True)
-        
-        with col2:
-            st.markdown(f"""
-            <div class='info-box'>
-                <p style='color: #4F46E5; font-weight: bold; margin-bottom: 0.5rem;'>📂 Type de fichier</p>
-                <p style='font-weight: bold; font-size: 1.1rem; margin: 0;'>{doc.get('file_type', 'N/A')}</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        if doc.get('category'):
-            col3, col4 = st.columns(2)
-            with col3:
-                st.markdown(f"""
-                <div class='info-box'>
-                    <p style='color: #10b981; font-weight: bold; margin-bottom: 0.5rem;'>📁 Catégorie</p>
-                    <p style='font-weight: bold; font-size: 1.1rem; margin: 0;'>{doc['category']}</p>
-                </div>
-                """, unsafe_allow_html=True)
-            
-            with col4:
-                confidence_value = (doc.get('confidence') or 0) * 100
-                confidence_color = "#10b981" if confidence_value >= 80 else "#f59e0b" if confidence_value >= 60 else "#ef4444"
-                st.markdown(f"""
-                <div class='info-box'>
-                    <p style='color: {confidence_color}; font-weight: bold; margin-bottom: 0.5rem;'>⭐ Confiance</p>
-                    <p style='font-weight: bold; font-size: 1.1rem; margin: 0; color: {confidence_color};'>{confidence_value:.1f}%</p>
-                </div>
-                """, unsafe_allow_html=True)
+        </div>
+        """, unsafe_allow_html=True)
         
         # Métadonnées
         if doc.get('metadata') and len(doc['metadata']) > 0:
@@ -451,13 +746,44 @@ if st.session_state.selected_document:
         # Texte extrait
         if doc.get('extracted_text'):
             st.markdown("### 📄 Texte extrait")
+            
+            text = doc['extracted_text']
+            word_count = len(text.split())
+            char_count = len(text)
+            
+            # Stats du texte
+            st.markdown(f"""
+            <div style='display: flex; gap: 1rem; margin-bottom: 1rem;'>
+                <div style='background-color: #667eea; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);'>
+                    <div style='font-size: 2rem; font-weight: 900;'>{word_count}</div>
+                    <div style='font-size: 0.9rem; opacity: 0.95;'>📝 Mots</div>
+                </div>
+                <div style='background-color: #10b981; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);'>
+                    <div style='font-size: 2rem; font-weight: 900;'>{char_count}</div>
+                    <div style='font-size: 0.9rem; opacity: 0.95;'>🔤 Caractères</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Affichage du texte avec formatage amélioré
+            st.markdown(f"""
+            <div style='background-color: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 2px solid #e2e8f0; margin-bottom: 1.5rem;'>
+                <div style='color: #667eea; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;'>
+                    <span style='font-size: 1.2rem;'>📝</span>
+                    <span>Aperçu:</span>
+                </div>
+                <div style='color: #334155; line-height: 1.8; font-size: 0.95rem;'>
+                    {text[:500]}{'...' if len(text) > 500 else ''}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
             with st.expander("👁️ Voir le texte complet", expanded=False):
-                st.text_area(
-                    "Texte",
-                    value=doc['extracted_text'],
-                    height=300,
-                    label_visibility="collapsed"
-                )
+                st.markdown(f"""
+                <div style='background: #ffffff; padding: 1.5rem; border-radius: 0.75rem; border: 2px solid #e2e8f0;'>
+                    <pre style='white-space: pre-wrap; word-wrap: break-word; font-family: "Segoe UI", sans-serif; margin: 0; color: #1e293b; line-height: 1.8;'>{text}</pre>
+                </div>
+                """, unsafe_allow_html=True)
         
         # Boutons d'action
         st.markdown("<br>", unsafe_allow_html=True)
