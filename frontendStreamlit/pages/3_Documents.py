@@ -32,26 +32,20 @@ st.markdown("""
         background-color: #0F172A !important;
     }
     
-    /* Cartes de documents */
+    /* Cartes de documents - Redesign */
     .doc-card {
-        background-color: #1E293B;
-        padding: 0;
-        border-radius: 1.2rem;
-        /* Remplacement de la bordure noire par une bordure claire subtile */
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        margin: 1rem;
-        margin-bottom: 2rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(160deg, #2D3748 0%, #1E293B 100%);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        margin: 0; /* Let streamlit grid handle gap */
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         position: relative;
-    }
-    
-    .doc-card:hover {
-        transform: translateY(-5px);
-        /* Bordure colorée au survol */
-        border-color: #8B5CF6;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(139, 92, 246, 0.2);
     }
     
     .doc-card::before {
@@ -60,58 +54,72 @@ st.markdown("""
         top: 0;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: linear-gradient(to bottom, rgba(139, 92, 246, 0.05), transparent);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: 0;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent 50%);
         pointer-events: none;
     }
     
-    .doc-card:hover::before {
-        opacity: 1;
+    .doc-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        border-color: rgba(139, 92, 246, 0.6);
+        background: linear-gradient(160deg, #334155 0%, #243045 100%);
+        z-index: 10;
     }
     
-    /* En-tête de carte */
+    /* En-tête plus subtil */
     .card-header {
         height: 120px;
-        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        background: rgba(15, 23, 42, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 3px solid #7C3AED;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        position: relative;
+        backdrop-filter: blur(5px);
     }
     
-    .card-header.pdf {
-        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
-        border-bottom-color: #7C3AED;
+    /* Indicateur de couleur en haut selon le type */
+    .card-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0px;
+        left: 20%;
+        right: 20%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), transparent);
+        box-shadow: 0 -2px 10px rgba(139, 92, 246, 0.5);
+        top: auto;
     }
     
-    .card-header.image {
-        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
-        border-bottom-color: #7C3AED;
-    }
+    .card-header.pdf::after { background: linear-gradient(90deg, #EF4444, #F87171); }
+    .card-header.image::after { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
     
     .card-body {
         padding: 1.5rem;
-        background-color: #1E293B;
+        background-color: transparent;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
     
-    /* Filtres */
-    .filter-section {
-        background-color: #1E293B;
-        padding: 2rem;
-        border-radius: 1rem;
-        border: 2px solid #334155;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        margin-bottom: 2rem;
+    /* Titre structuré */
+    .doc-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #F1F5F9; /* Slate 100 */
+        text-align: center;
+        line-height: 1.4;
+        margin: 0;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    /* Badges */
+    /* Badges unifiés */
     .badge-container {
         display: flex;
         gap: 0.5rem;
-        margin: 1rem 0;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -119,147 +127,56 @@ st.markdown("""
     .badge {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-radius: 1.5rem;
-        font-weight: 700;
-        font-size: 0.85rem;
-        transition: all 0.3s;
+        gap: 0.35rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        background-color: #334155; /* Fond neutre sombre */
+        color: #E2E8F0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .badge:hover {
-        transform: translateY(-2px);
+    .badge-category { background-color: rgba(139, 92, 246, 0.2); color: #A78BFA; border-color: rgba(139, 92, 246, 0.3); }
+    .badge-type { background-color: rgba(59, 130, 246, 0.2); color: #60A5FA; border-color: rgba(59, 130, 246, 0.3); }
+    
+    /* Confiance */
+    .confidence-pill {
+        background-color: rgba(15, 23, 42, 0.5);
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        text-align: center;
+        margin-top: auto; /* Pousser vers le bas */
     }
     
-    .badge-category {
-        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
-        color: white;
-    }
-    
-    .badge-type {
-        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
-        color: white;
-    }
-    
-    .badge-confidence-high {
-        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-        color: white;
-    }
-    
-    .badge-confidence-medium {
-        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-        color: white;
-    }
-    
-    .badge-confidence-low {
-        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-        color: white;
-    }
-    
-    /* Aperçu du texte */
+    /* Aperçu du texte encadré */
     .text-preview {
-        background-color: #0F172A;
+        background-color: rgba(15, 23, 42, 0.5);
         padding: 1rem;
         border-radius: 0.75rem;
-        border-left: 4px solid #8B5CF6;
-        margin: 1rem 0;
-        color: #CBD5E1;
-        font-size: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin: 0;
+        color: #94A3B8;
+        font-size: 0.85rem;
         font-style: italic;
         line-height: 1.6;
     }
     
     .text-preview-title {
-        color: #A78BFA;
+        color: #8B5CF6;
+        font-size: 0.75rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
     
-    /* Titre de document */
-    .doc-title {
-        font-size: 1.1rem;
-        font-weight: 800;
-        color: #F1F5F9;
-        margin: 1rem 0;
-        text-align: center;
-        line-height: 1.4;
-    }
-    
+    /* Date discrète */
     .doc-date {
         text-align: center;
-        color: #94A3B8;
-        font-size: 0.85rem;
-        margin: 0.5rem 0;
-    }
-    
-    /* Stats card */
-    .stats-card {
-        background-color: #1E293B;
-        padding: 1.5rem;
-        border-radius: 1rem;
-        border: 2px solid #8B5CF6;
-        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
-    }
-    
-    .stats-number {
-        font-size: 3rem;
-        font-weight: 900;
-        color: #8B5CF6;
-    }
-    
-    .stats-label {
-        font-size: 1.1rem;
-        color: #F1F5F9;
-        font-weight: 700;
-    }
-    
-    /* Titres */
-    .page-title {
-        font-size: 4rem;
-        font-weight: 900;
-        color: #8B5CF6;
-        text-align: center;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 10px rgba(139, 92, 246, 0.2);
-    }
-    
-    .page-subtitle {
-        font-size: 1.2rem;
-        color: #94A3B8;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    
-    .section-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #8B5CF6;
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    /* Info box dans modal */
-    .info-box {
-        background-color: #0F172A;
-        padding: 1.25rem;
-        border-radius: 0.75rem;
-        border: 2px solid #334155;
-        margin-bottom: 1rem;
-    }
-    
-    .info-box-label {
-        color: #8B5CF6;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-    }
-    
-    .info-box-value {
-        color: #F1F5F9;
-        font-weight: 700;
-        font-size: 1.1rem;
+        color: #64748b;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
     }
     
     /* Boutons */
@@ -492,7 +409,7 @@ else:
             cols = st.columns(cols_per_row, gap="large")
             # Ajouter un espacement vertical entre les rangées
             if i > 0:
-                st.markdown("<div style='margin: 2rem 0;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='margin: 4rem 0;'></div>", unsafe_allow_html=True)
             for j in range(cols_per_row):
                 if i + j < len(filtered_docs):
                     doc = filtered_docs[i + j]
