@@ -11,15 +11,28 @@ st.set_page_config(
 )
 
 # CSS personnalisé
+# CSS personnalisé - Mode Sombre
 st.markdown("""
 <style>
+    /* Fond sombre global */
+    .stApp {
+        background-color: #0F172A !important;
+    }
+    
     .register-header {
         text-align: center;
         margin-bottom: 2rem;
     }
+    .register-header h1 {
+        color: #F8FAFC !important;
+    }
+    .register-header p {
+        color: #94A3B8 !important;
+    }
+    
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         color: white;
         border: none;
         padding: 0.75rem 2rem;
@@ -29,7 +42,22 @@ st.markdown("""
     }
     .stButton>button:hover {
         transform: scale(1.02);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+    }
+    
+    /* Inputs */
+    .stTextInput label {
+        color: #E2E8F0 !important;
+    }
+    .stTextInput input {
+        background-color: #1E293B !important;
+        color: #E2E8F0 !important;
+        border-color: #475569 !important;
+    }
+    .stTextInput input:focus {
+        border-color: #8B5CF6 !important;
+        box-shadow: 0 0 0 1px #8B5CF6 !important;
     }
 </style>
 """, unsafe_allow_html=True)

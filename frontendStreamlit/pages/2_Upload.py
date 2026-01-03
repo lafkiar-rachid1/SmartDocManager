@@ -21,14 +21,21 @@ if not AuthService.is_authenticated():
     st.stop()
 
 # CSS personnalisé
+# CSS personnalisé - Mode Sombre
 st.markdown("""
 <style>
+    /* Fond sombre global */
+    .stApp {
+        background-color: #0F172A !important;
+    }
+    
     .upload-container {
-        background: white;
+        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
         padding: 2rem;
         border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         margin: 1rem 0;
+        border: 2px solid #475569;
     }
     .step-container {
         display: flex;
@@ -40,24 +47,56 @@ st.markdown("""
         text-align: center;
         padding: 1rem;
         border-radius: 0.5rem;
-        background: #f3f4f6;
+        background: #1E293B;
+        color: #94A3B8;
         margin: 0 0.5rem;
+        border: 1px solid #475569;
     }
     .step.active {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         color: white;
         transform: scale(1.05);
+        border: none;
+        box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
     }
     .step.completed {
-        background: #10b981;
+        background: #059669;
         color: white;
+        border: none;
     }
     .result-card {
-        background: linear-gradient(135deg, #60a5fa 0%, #6366f1 100%);
+        background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
         padding: 2rem;
         border-radius: 1rem;
         color: white;
         margin: 1rem 0;
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+    }
+    /* Textes */
+    h1, h2, h3 {
+        color: #F8FAFC !important;
+    }
+    p, li {
+        color: #CBD5E1 !important;
+    }
+    .stMarkdown p {
+        color: #E2E8F0 !important;
+    }
+    .stCaption {
+        color: #94A3B8 !important;
+    }
+    
+    /* Boutons */
+    .stButton>button {
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: bold;
+    }
+    .stButton>button:hover {
+        background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
     }
 </style>
 """, unsafe_allow_html=True)

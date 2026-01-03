@@ -15,48 +15,67 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS personnalisé
+# CSS personnalisé - Mode Sombre
 st.markdown("""
 <style>
+    /* Fond sombre global */
+    .stApp {
+        background-color: #0F172A !important;
+    }
+    
+    .main {
+        background-color: #0F172A !important;
+    }
+    
     .main-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         padding: 2rem;
         border-radius: 1rem;
         color: white;
         text-align: center;
         margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
     }
     .warning-banner {
-        background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
         padding: 1.5rem;
         border-radius: 0.75rem;
         color: white;
         margin-bottom: 2rem;
+        border: 1px solid rgba(245, 158, 11, 0.3);
     }
     .feature-card {
-        background: white;
+        background: linear-gradient(135deg, #1E293B 0%, #334155 100%);
         padding: 2rem;
         border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         text-align: center;
-        border: 2px solid #e5e7eb;
+        border: 2px solid #475569;
         transition: all 0.3s;
     }
     .feature-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-        border-color: #667eea;
+        box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4);
+        border-color: #8B5CF6;
+        background: linear-gradient(135deg, #334155 0%, #475569 100%);
+    }
+    .feature-card h3 {
+        color: #E2E8F0 !important;
+    }
+    .feature-card p {
+        color: #94A3B8 !important;
     }
     .result-card {
-        background: linear-gradient(135deg, #60a5fa 0%, #6366f1 100%);
+        background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
         padding: 2rem;
         border-radius: 1rem;
         color: white;
         margin: 1rem 0;
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
     }
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         color: white;
         border: none;
         padding: 0.75rem 2rem;
@@ -66,7 +85,20 @@ st.markdown("""
     }
     .stButton>button:hover {
         transform: scale(1.05);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 20px rgba(139, 92, 246, 0.5);
+        background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+    }
+    
+    /* Inputs et autres éléments */
+    .stTextInput input {
+        background-color: #1E293B !important;
+        color: #E2E8F0 !important;
+        border-color: #475569 !important;
+    }
+    
+    /* Progress bar */
+    .stProgress > div > div {
+        background-color: #8B5CF6 !important;
     }
 </style>
 """, unsafe_allow_html=True)

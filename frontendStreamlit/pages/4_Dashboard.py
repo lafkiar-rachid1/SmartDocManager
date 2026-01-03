@@ -23,12 +23,16 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS personnalisé
+# CSS personnalisé - Mode Sombre
 st.markdown("""
 <style>
     /* Style général */
+    .stApp {
+        background-color: #0F172A !important;
+    }
+    
     .main {
-        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+        background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
     }
     
     /* Masquer le padding par défaut */
@@ -38,12 +42,12 @@ st.markdown("""
     
     /* Cartes de statistiques */
     .stat-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
         backdrop-filter: blur(20px);
         padding: 2rem 1.5rem;
         border-radius: 1.5rem;
-        border: 2px solid rgba(255,255,255,0.4);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        border: 2px solid rgba(255,255,255,0.1);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         text-align: center;
         transition: all 0.3s ease;
         height: 100%;
@@ -51,13 +55,14 @@ st.markdown("""
     
     .stat-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+        box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
+        border-color: rgba(139, 92, 246, 0.4);
     }
     
     .stat-icon {
         font-size: 3rem;
         margin-bottom: 1rem;
-        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
     }
     
     .stat-value {
@@ -65,6 +70,7 @@ st.markdown("""
         font-weight: 900;
         margin: 1rem 0 0.5rem 0;
         letter-spacing: -0.02em;
+        color: #F8FAFC;
     }
     
     .stat-label {
@@ -73,23 +79,24 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.05em;
         opacity: 0.9;
+        color: #94A3B8 !important;
     }
     
     /* Cartes de graphiques */
     .chart-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
         backdrop-filter: blur(20px);
         padding: 2rem;
         border-radius: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        border: 2px solid rgba(255,255,255,0.4);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        border: 2px solid rgba(255,255,255,0.1);
         margin-bottom: 2rem;
     }
     
     .chart-title {
         font-size: 1.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -100,13 +107,13 @@ st.markdown("""
     .section-header {
         margin: 3rem 0 1.5rem 0;
         padding-bottom: 1rem;
-        border-bottom: 3px solid rgba(79, 70, 229, 0.2);
+        border-bottom: 3px solid rgba(139, 92, 246, 0.2);
     }
     
     .section-title {
         font-size: 2rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -114,20 +121,20 @@ st.markdown("""
     
     /* Progress bars */
     .progress-container {
-        background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
         backdrop-filter: blur(20px);
         padding: 1.5rem;
         border-radius: 1rem;
-        border: 2px solid rgba(255,255,255,0.4);
+        border: 2px solid rgba(255,255,255,0.1);
         margin-bottom: 1rem;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         width: 100%;
     }
     
     .category-name {
         font-weight: 700;
         font-size: 1.1rem;
-        color: #1f2937;
+        color: #F8FAFC;
         margin: 0;
         padding: 0;
         line-height: 1.5;
@@ -135,7 +142,7 @@ st.markdown("""
     
     .category-stats {
         font-size: 0.9rem;
-        color: #6b7280;
+        color: #94A3B8;
         font-weight: 500;
         margin-top: 0.5rem;
         padding: 0;
@@ -149,27 +156,36 @@ st.markdown("""
         letter-spacing: 0.05em;
         transition: all 0.3s ease;
         border: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     
     .stButton>button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
     }
     
     /* Dataframe styling */
     .stDataFrame {
         border-radius: 1rem;
         overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
     
     /* Expander */
     .streamlit-expanderHeader {
-        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
         border-radius: 1rem;
         font-weight: 700;
+        color: #F8FAFC !important;
     }
+    .streamlit-expanderContent {
+        background-color: #1E293B !important;
+        color: #E2E8F0 !important;
+    }
+    
+    /* Textes */
+    h1, h2, h3 { color: #F8FAFC !important; }
+    p, li { color: #CBD5E1 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -251,39 +267,39 @@ col1, col2, col3, col4 = st.columns(4, gap="large")
 
 with col1:
     st.markdown(f"""
-    <div class='stat-card' style='background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white;'>
+    <div class='stat-card' style='background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 100%); color: white;'>
         <div class='stat-icon'>📁</div>
         <div class='stat-value'>{stats.get('total_documents', 0)}</div>
-        <div class='stat-label' style='color: rgba(255,255,255,0.95);'>Total Documents</div>
+        <div class='stat-label' style='color: rgba(255,255,255,0.95) !important;'>Total Documents</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown(f"""
-    <div class='stat-card' style='background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white;'>
+    <div class='stat-card' style='background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%); color: white;'>
         <div class='stat-icon'>📅</div>
         <div class='stat-value'>{stats.get('recent_documents', 0)}</div>
-        <div class='stat-label' style='color: rgba(255,255,255,0.95);'>Derniers 7 Jours</div>
+        <div class='stat-label' style='color: rgba(255,255,255,0.95) !important;'>Derniers 7 Jours</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
     avg_confidence = stats.get('average_confidence', 0) * 100
     st.markdown(f"""
-    <div class='stat-card' style='background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;'>
+    <div class='stat-card' style='background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white;'>
         <div class='stat-icon'>🎯</div>
         <div class='stat-value'>{avg_confidence:.1f}%</div>
-        <div class='stat-label' style='color: rgba(255,255,255,0.95);'>Confiance Moy.</div>
+        <div class='stat-label' style='color: rgba(255,255,255,0.95) !important;'>Confiance Moy.</div>
     </div>
     """, unsafe_allow_html=True)
 
 with col4:
     total_words = stats.get('total_words_extracted', 0)
     st.markdown(f"""
-    <div class='stat-card' style='background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;'>
+    <div class='stat-card' style='background: linear-gradient(135deg, #D97706 0%, #B45309 100%); color: white;'>
         <div class='stat-icon'>📝</div>
         <div class='stat-value'>{total_words:,}</div>
-        <div class='stat-label' style='color: rgba(255,255,255,0.95);'>Mots Extraits</div>
+        <div class='stat-label' style='color: rgba(255,255,255,0.95) !important;'>Mots Extraits</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -338,13 +354,14 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
                 margin=dict(t=20, b=20, l=20, r=20),
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(size=13, family='Arial'),
+                font=dict(size=13, family='Arial', color='#E2E8F0'),
                 legend=dict(
                     orientation="v",
                     yanchor="middle",
                     y=0.5,
                     xanchor="left",
-                    x=1.05
+                    x=1.05,
+                    font=dict(color='#E2E8F0')
                 )
             )
             
@@ -374,7 +391,7 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
             
             fig_bar.update_traces(
                 textposition='outside',
-                textfont=dict(size=14, color='#1f2937', family='Arial Black'),
+                textfont=dict(size=14, color='#E2E8F0', family='Arial Black'),
                 marker=dict(line=dict(color='rgb(8,48,107)', width=2)),
                 hovertemplate='<b>%{x}</b><br>Documents: %{y}<extra></extra>'
             )
@@ -388,14 +405,14 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
                 hovermode='x unified',
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                font=dict(size=13, family='Arial'),
+                font=dict(size=13, family='Arial', color='#E2E8F0'),
                 xaxis=dict(
                     tickangle=-45,
-                    tickfont=dict(size=12, color='#1f2937')
+                    tickfont=dict(size=12, color='#E2E8F0')
                 ),
                 yaxis=dict(
-                    gridcolor='rgba(0,0,0,0.05)',
-                    tickfont=dict(size=12, color='#1f2937')
+                    gridcolor='rgba(255,255,255,0.1)',
+                    tickfont=dict(size=12, color='#E2E8F0')
                 )
             )
             
@@ -419,7 +436,7 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
         df_display = pd.DataFrame(categories_data)
         
         # Créer le tableau en HTML statique pour éviter les vibrations
-        table_html = '<div style="background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin: 1rem 0;">'
+        table_html = '<div style="background: #1E293B; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.3); margin: 1rem 0; border: 1px solid #334155;">'
         table_html += '<table style="width: 100%; border-collapse: collapse;">'
         table_html += '<thead><tr style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white;">'
         table_html += '<th style="padding: 1rem; text-align: left; font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;">Catégorie</th>'
@@ -432,16 +449,16 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
             # Couleur de confiance
             confidence_val = row['avg_confidence'] * 100
             if confidence_val >= 80:
-                confidence_color = "#10b981"
+                confidence_color = "#10B981"
             elif confidence_val >= 60:
-                confidence_color = "#f59e0b"
+                confidence_color = "#F59E0B"
             else:
-                confidence_color = "#ef4444"
+                confidence_color = "#EF4444"
             
-            table_html += f'<tr style="border-bottom: 1px solid #f3f4f6;">'
-            table_html += f'<td style="padding: 1rem; font-weight: 600; color: #1f2937;">{row["category"]}</td>'
-            table_html += f'<td style="padding: 1rem; color: #4b5563;">{row["count"]}</td>'
-            table_html += f'<td style="padding: 1rem; color: #4b5563;">{row["percentage"]}%</td>'
+            table_html += f'<tr style="border-bottom: 1px solid #334155;">'
+            table_html += f'<td style="padding: 1rem; font-weight: 600; color: #E2E8F0;">{row["category"]}</td>'
+            table_html += f'<td style="padding: 1rem; color: #94A3B8;">{row["count"]}</td>'
+            table_html += f'<td style="padding: 1rem; color: #94A3B8;">{row["percentage"]}%</td>'
             table_html += f'<td style="padding: 1rem; font-weight: 700; color: {confidence_color};">{confidence_val:.1f}%</td>'
             table_html += '</tr>'
         
@@ -468,8 +485,8 @@ if st.session_state.category_stats and st.session_state.category_stats.get('cate
                         <div class='category-name'>{row['category']}</div>
                     </div>
                     <div style="flex: 1;">
-                        <div style="background: #e5e7eb; border-radius: 9999px; height: 32px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);">
-                            <div style="background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%); height: 100%; width: {percentage_width}%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;">
+                        <div style="background: #374151; border-radius: 9999px; height: 32px; overflow: hidden; position: relative; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);">
+                            <div style="background: linear-gradient(90deg, #3B82F6 0%, #2563EB 100%); height: 100%; width: {percentage_width}%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;">
                                 <span style="color: white; font-weight: bold; font-size: 0.875rem;">{percentage_width}%</span>
                             </div>
                         </div>

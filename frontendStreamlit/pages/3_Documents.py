@@ -20,27 +20,27 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS personnalisé - Design moderne sur fond blanc
+# CSS personnalisé - Mode Sombre
 st.markdown("""
 <style>
-    /* Fond principal BLANC */
+    /* Fond principal SOMBRE */
     .stApp {
-        background-color: #f8fafc !important;
+        background-color: #0F172A !important;
     }
     
     .main {
-        background-color: #f8fafc !important;
+        background-color: #0F172A !important;
     }
     
     /* Cartes de documents */
     .doc-card {
-        background-color: #ffffff;
+        background-color: #1E293B;
         padding: 0;
         border-radius: 1.2rem;
-        border: 3px solid #cbd5e1;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-        margin: 1.5rem;
-        margin-bottom: 3.5rem;
+        border: 4px solid #000000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3);
+        margin: 2.5rem;
+        margin-bottom: 4.5rem;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         overflow: hidden;
         position: relative;
@@ -48,9 +48,9 @@ st.markdown("""
     
     .doc-card:hover {
         transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 28px 50px rgba(102, 126, 234, 0.35), 0 12px 24px rgba(102, 126, 234, 0.2);
-        border-color: #667eea;
-        border-width: 3px;
+        box-shadow: 0 32px 60px rgba(0, 0, 0, 0.6), 0 16px 28px rgba(139, 92, 246, 0.2);
+        border-color: #8B5CF6;
+        border-width: 5px;
     }
     
     .doc-card::before {
@@ -60,7 +60,7 @@ st.markdown("""
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(109, 40, 217, 0.1) 100%);
         opacity: 0;
         transition: opacity 0.4s ease;
         z-index: 0;
@@ -74,35 +74,35 @@ st.markdown("""
     /* En-tête de carte */
     .card-header {
         height: 120px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 3px solid #5a67d8;
+        border-bottom: 3px solid #7C3AED;
     }
     
     .card-header.pdf {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-bottom-color: #5a67d8;
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        border-bottom-color: #7C3AED;
     }
     
     .card-header.image {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-bottom-color: #5a67d8;
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+        border-bottom-color: #7C3AED;
     }
     
     .card-body {
         padding: 1.5rem;
-        background-color: #ffffff;
+        background-color: #1E293B;
     }
     
     /* Filtres */
     .filter-section {
-        background-color: #ffffff;
+        background-color: #1E293B;
         padding: 2rem;
         border-radius: 1rem;
-        border: 2px solid #e2e8f0;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        border: 2px solid #334155;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         margin-bottom: 2rem;
     }
     
@@ -131,45 +131,45 @@ st.markdown("""
     }
     
     .badge-category {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
         color: white;
     }
     
     .badge-type {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
         color: white;
     }
     
     .badge-confidence-high {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         color: white;
     }
     
     .badge-confidence-medium {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
         color: white;
     }
     
     .badge-confidence-low {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
         color: white;
     }
     
     /* Aperçu du texte */
     .text-preview {
-        background-color: #f1f5f9;
+        background-color: #0F172A;
         padding: 1rem;
         border-radius: 0.75rem;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #8B5CF6;
         margin: 1rem 0;
-        color: #334155;
+        color: #CBD5E1;
         font-size: 0.9rem;
         font-style: italic;
         line-height: 1.6;
     }
     
     .text-preview-title {
-        color: #667eea;
+        color: #A78BFA;
         font-weight: 700;
         margin-bottom: 0.5rem;
         display: flex;
@@ -181,7 +181,7 @@ st.markdown("""
     .doc-title {
         font-size: 1.1rem;
         font-weight: 800;
-        color: #1e293b;
+        color: #F1F5F9;
         margin: 1rem 0;
         text-align: center;
         line-height: 1.4;
@@ -189,29 +189,29 @@ st.markdown("""
     
     .doc-date {
         text-align: center;
-        color: #64748b;
+        color: #94A3B8;
         font-size: 0.85rem;
         margin: 0.5rem 0;
     }
     
     /* Stats card */
     .stats-card {
-        background-color: #ffffff;
+        background-color: #1E293B;
         padding: 1.5rem;
         border-radius: 1rem;
-        border: 2px solid #667eea;
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+        border: 2px solid #8B5CF6;
+        box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
     }
     
     .stats-number {
         font-size: 3rem;
         font-weight: 900;
-        color: #667eea;
+        color: #8B5CF6;
     }
     
     .stats-label {
         font-size: 1.1rem;
-        color: #1e293b;
+        color: #F1F5F9;
         font-weight: 700;
     }
     
@@ -219,15 +219,15 @@ st.markdown("""
     .page-title {
         font-size: 4rem;
         font-weight: 900;
-        color: #667eea;
+        color: #8B5CF6;
         text-align: center;
         margin-bottom: 0.5rem;
-        text-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+        text-shadow: 0 2px 10px rgba(139, 92, 246, 0.2);
     }
     
     .page-subtitle {
         font-size: 1.2rem;
-        color: #475569;
+        color: #94A3B8;
         text-align: center;
         margin-bottom: 2rem;
     }
@@ -235,28 +235,28 @@ st.markdown("""
     .section-title {
         font-size: 2rem;
         font-weight: 800;
-        color: #667eea;
+        color: #8B5CF6;
         text-align: center;
         margin-bottom: 1.5rem;
     }
     
     /* Info box dans modal */
     .info-box {
-        background-color: #f8fafc;
+        background-color: #0F172A;
         padding: 1.25rem;
         border-radius: 0.75rem;
-        border: 2px solid #e2e8f0;
+        border: 2px solid #334155;
         margin-bottom: 1rem;
     }
     
     .info-box-label {
-        color: #667eea;
+        color: #8B5CF6;
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
     
     .info-box-value {
-        color: #1e293b;
+        color: #F1F5F9;
         font-weight: 700;
         font-size: 1.1rem;
     }
@@ -271,7 +271,7 @@ st.markdown("""
     
     .stButton button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -395,7 +395,7 @@ filtered_docs = filter_documents()
 col_stat, col_btn = st.columns([4, 1])
 with col_stat:
     st.markdown(f"""
-    <div class='stats-card' style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; padding: 2rem;'>
+    <div class='stats-card' style='background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%); border: none; padding: 2rem;'>
         <div style='display: flex; align-items: center; justify-content: space-between;'>
             <div style='display: flex; align-items: center; gap: 2rem;'>
                 <div style='font-size: 5rem; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));'>📊</div>
@@ -749,10 +749,10 @@ if st.session_state.selected_document:
         st.markdown("### 📋 Informations")
         
         st.markdown(f"""
-        <div style='background-color: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 2px solid #e2e8f0; margin-bottom: 1rem;'>
+        <div style='background-color: #1E293B; padding: 1.5rem; border-radius: 1rem; border: 2px solid #334155; margin-bottom: 1rem;'>
             <div style='margin-bottom: 1rem;'>
-                <span style='color: #64748b; font-weight: 600; font-size: 0.9rem;'>📎 NOM DU FICHIER</span>
-                <p style='color: #1e293b; font-weight: 700; font-size: 1.2rem; margin: 0.5rem 0 0 0;'>{doc.get('filename', 'N/A')}</p>
+                <span style='color: #94A3B8; font-weight: 600; font-size: 0.9rem;'>📎 NOM DU FICHIER</span>
+                <p style='color: #F1F5F9; font-weight: 700; font-size: 1.2rem; margin: 0.5rem 0 0 0;'>{doc.get('filename', 'N/A')}</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -779,11 +779,11 @@ if st.session_state.selected_document:
             # Stats du texte
             st.markdown(f"""
             <div style='display: flex; gap: 1rem; margin-bottom: 1rem;'>
-                <div style='background-color: #667eea; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);'>
+                <div style='background-color: #8B5CF6; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.2);'>
                     <div style='font-size: 2rem; font-weight: 900;'>{word_count}</div>
                     <div style='font-size: 0.9rem; opacity: 0.95;'>📝 Mots</div>
                 </div>
-                <div style='background-color: #10b981; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);'>
+                <div style='background-color: #10B981; color: white; padding: 1rem 1.5rem; border-radius: 0.75rem; flex: 1; text-align: center; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);'>
                     <div style='font-size: 2rem; font-weight: 900;'>{char_count}</div>
                     <div style='font-size: 0.9rem; opacity: 0.95;'>🔤 Caractères</div>
                 </div>
@@ -792,12 +792,12 @@ if st.session_state.selected_document:
             
             # Affichage du texte avec formatage amélioré
             st.markdown(f"""
-            <div style='background-color: #f8fafc; padding: 1.5rem; border-radius: 1rem; border: 2px solid #e2e8f0; margin-bottom: 1.5rem;'>
-                <div style='color: #667eea; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;'>
+            <div style='background-color: #1E293B; padding: 1.5rem; border-radius: 1rem; border: 2px solid #334155; margin-bottom: 1.5rem;'>
+                <div style='color: #8B5CF6; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;'>
                     <span style='font-size: 1.2rem;'>📝</span>
                     <span>Aperçu:</span>
                 </div>
-                <div style='color: #334155; line-height: 1.8; font-size: 0.95rem;'>
+                <div style='color: #CBD5E1; line-height: 1.8; font-size: 0.95rem;'>
                     {text[:500]}{'...' if len(text) > 500 else ''}
                 </div>
             </div>
