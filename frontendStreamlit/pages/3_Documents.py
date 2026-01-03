@@ -36,24 +36,45 @@ st.markdown("""
     .doc-card {
         background-color: #ffffff;
         padding: 0;
-        border-radius: 1rem;
-        border: 2px solid #e2e8f0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-        transition: all 0.3s ease;
+        border-radius: 1.2rem;
+        border: 3px solid #cbd5e1;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+        margin: 1.5rem;
+        margin-bottom: 3.5rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         overflow: hidden;
+        position: relative;
     }
     
     .doc-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 28px 50px rgba(102, 126, 234, 0.35), 0 12px 24px rgba(102, 126, 234, 0.2);
         border-color: #667eea;
+        border-width: 3px;
+    }
+    
+    .doc-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 0;
+        pointer-events: none;
+    }
+    
+    .doc-card:hover::before {
+        opacity: 1;
     }
     
     /* En-tête de carte */
     .card-header {
-        height: 200px;
-        background: #667eea;
+        height: 120px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -61,13 +82,13 @@ st.markdown("""
     }
     
     .card-header.pdf {
-        background: #f43f5e;
-        border-bottom-color: #e11d48;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-bottom-color: #5a67d8;
     }
     
     .card-header.image {
-        background: #10b981;
-        border-bottom-color: #059669;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-bottom-color: #5a67d8;
     }
     
     .card-body {
@@ -110,27 +131,27 @@ st.markdown("""
     }
     
     .badge-category {
-        background-color: #667eea;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
     }
     
     .badge-type {
-        background-color: #f43f5e;
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         color: white;
     }
     
     .badge-confidence-high {
-        background-color: #10b981;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         color: white;
     }
     
     .badge-confidence-medium {
-        background-color: #f59e0b;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         color: white;
     }
     
     .badge-confidence-low {
-        background-color: #ef4444;
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         color: white;
     }
     
@@ -277,17 +298,43 @@ if 'filter_type' not in st.session_state:
     st.session_state.filter_type = 'all'
 if 'search_term' not in st.session_state:
     st.session_state.search_term = ''
+if 'last_refresh' not in st.session_state:
+    st.session_state.last_refresh = 0
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = None
+
+# Nettoyer le selected_document quand on arrive sur la page depuis une autre page
+if st.session_state.current_page != '3_Documents':
+    st.session_state.selected_document = None
+    st.session_state.current_page = '3_Documents'
+
+# Fonction pour charger les documents avec cache
+@st.cache_data(ttl=60, show_spinner=False)  # Cache de 60 secondes
+def fetch_documents_cached(_auth_headers):
+    """Charger les documents depuis l'API avec cache"""
+    result = APIService.get_documents()
+    if result["success"]:
+        return result["data"]
+    return None
 
 # Fonction pour charger les documents
-def load_documents():
+def load_documents(force_refresh=False):
     """Charger les documents depuis l'API"""
     with st.spinner("🔄 Chargement des documents..."):
-        result = APIService.get_documents()
-        if result["success"]:
-            st.session_state.documents = result["data"]
+        if force_refresh:
+            # Forcer le rafraîchissement en changeant le timestamp
+            st.session_state.last_refresh = st.session_state.last_refresh + 1
+            st.cache_data.clear()
+        
+        headers = AuthService.get_headers()
+        # Utiliser le cache avec un timestamp pour forcer le refresh si besoin
+        docs = fetch_documents_cached(str(headers) + str(st.session_state.last_refresh))
+        
+        if docs is not None:
+            st.session_state.documents = docs
             return True
         else:
-            st.error(f"❌ {result['error']}")
+            st.error("❌ Erreur lors du chargement des documents")
             return False
 
 # Fonction pour filtrer les documents
@@ -320,7 +367,8 @@ def delete_document(document_id):
     if result["success"]:
         st.success("✅ Document supprimé avec succès!")
         st.session_state.selected_document = None
-        load_documents()
+        # Forcer le refresh du cache
+        load_documents(force_refresh=True)
         st.rerun()
     else:
         st.error(f"❌ {result['error']}")
@@ -363,7 +411,7 @@ with col_stat:
 with col_btn:
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button("🔄 Actualiser", use_container_width=True, type="primary"):
-        load_documents()
+        load_documents(force_refresh=True)
         st.rerun()
 
 # Section des filtres
@@ -381,11 +429,11 @@ with col1:
         "Rechercher",
         value=st.session_state.search_term,
         placeholder="Nom du fichier...",
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        key="search_input"
     )
     if search != st.session_state.search_term:
         st.session_state.search_term = search
-        st.rerun()
 
 with col2:
     st.markdown("**📂 Catégorie**")
@@ -399,11 +447,11 @@ with col2:
         options=categories,
         format_func=lambda x: 'Toutes' if x == 'all' else x,
         index=categories.index(st.session_state.filter_category) if st.session_state.filter_category in categories else 0,
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        key="category_select"
     )
     if category != st.session_state.filter_category:
         st.session_state.filter_category = category
-        st.rerun()
 
 with col3:
     st.markdown("**📄 Type de fichier**")
@@ -417,11 +465,11 @@ with col3:
         options=file_types,
         format_func=lambda x: 'Tous' if x == 'all' else x,
         index=file_types.index(st.session_state.filter_type) if st.session_state.filter_type in file_types else 0,
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        key="type_select"
     )
     if file_type != st.session_state.filter_type:
         st.session_state.filter_type = file_type
-        st.rerun()
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -441,6 +489,9 @@ else:
         cols_per_row = 3
         for i in range(0, len(filtered_docs), cols_per_row):
             cols = st.columns(cols_per_row, gap="large")
+            # Ajouter un espacement vertical entre les rangées
+            if i > 0:
+                st.markdown("<div style='margin: 2rem 0;'></div>", unsafe_allow_html=True)
             for j in range(cols_per_row):
                 if i + j < len(filtered_docs):
                     doc = filtered_docs[i + j]
@@ -448,57 +499,26 @@ else:
                         # Carte de document avec design WOW
                         st.markdown('<div class="doc-card">', unsafe_allow_html=True)
                         
-                        # En-tête avec aperçu image ou icône
+                        # En-tête avec icône (pas de chargement d'image pour la performance)
                         file_type = doc.get('file_type', 'UNKNOWN')
                         if file_type == 'IMAGE':
-                            # Essayer d'afficher l'image
-                            try:
-                                import requests
-                                from PIL import Image
-                                from io import BytesIO
-                                import base64
-                                
-                                headers = AuthService.get_headers()
-                                response = requests.get(
-                                    f"http://localhost:8000/api/documents/{doc['id']}/image",
-                                    headers=headers
-                                )
-                                
-                                if response.status_code == 200:
-                                    image = Image.open(BytesIO(response.content))
-                                    # Redimensionner pour l'aperçu
-                                    image.thumbnail((400, 200))
-                                    buffered = BytesIO()
-                                    image.save(buffered, format="PNG")
-                                    img_str = base64.b64encode(buffered.getvalue()).decode()
-                                    
-                                    st.markdown(f"""
-                                    <div class='card-header image' style='padding: 0;'>
-                                        <img src='data:image/png;base64,{img_str}' style='width: 100%; height: 100%; object-fit: cover;'>
-                                    </div>
-                                    """, unsafe_allow_html=True)
-                                else:
-                                    st.markdown("""
-                                    <div class='card-header image'>
-                                        <div style='font-size: 5rem;'>🖼️</div>
-                                    </div>
-                                    """, unsafe_allow_html=True)
-                            except:
-                                st.markdown("""
-                                <div class='card-header image'>
-                                    <div style='font-size: 5rem;'>🖼️</div>
-                                </div>
-                                """, unsafe_allow_html=True)
+                            # Afficher uniquement l'icône pour la performance
+                            # L'image complète sera chargée dans les détails
+                            st.markdown("""
+                            <div class='card-header image'>
+                                <div style='font-size: 3.5rem;'>🖼️</div>
+                            </div>
+                            """, unsafe_allow_html=True)
                         elif file_type == 'PDF':
                             st.markdown("""
                             <div class='card-header pdf'>
-                                <div style='font-size: 5rem;'>📕</div>
+                                <div style='font-size: 3.5rem;'>📕</div>
                             </div>
                             """, unsafe_allow_html=True)
                         else:
                             st.markdown("""
                             <div class='card-header'>
-                                <div style='font-size: 5rem;'>📄</div>
+                                <div style='font-size: 3.5rem;'>📄</div>
                             </div>
                             """, unsafe_allow_html=True)
                         
@@ -526,7 +546,7 @@ else:
                         
                         # Badge type
                         if file_type:
-                            type_icon = "📕" if file_type == "PDF" else "🖼️" if file_type == "IMAGE" else "📄"
+                            type_icon = "�" if file_type == "PDF" else "🖼️" if file_type == "IMAGE" else "📄"
                             st.markdown(f"""
                             <span class='badge badge-type'>
                                 <span>{type_icon}</span>
@@ -649,76 +669,81 @@ if st.session_state.selected_document:
         file_type = doc.get('file_type', 'N/A')
         category = doc.get('category', '')
         
-        badge_html = f"""
-        <div style='display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;'>
-        """
+        # Utiliser st.columns pour les badges au lieu de HTML pour éviter les problèmes d'affichage
+        st.markdown("---")
+        
+        cols_badges = st.columns([1, 1, 1, 1])
         
         # Badge type de fichier
-        if file_type == 'PDF':
-            badge_html += f"""
-            <div style='background-color: #ef4444; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);'>
-                <span style='font-size: 1.5rem;'>📕</span>
-                <span>PDF</span>
-            </div>
-            """
-        elif file_type == 'IMAGE':
-            badge_html += f"""
-            <div style='background-color: #10b981; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);'>
-                <span style='font-size: 1.5rem;'>🖼️</span>
-                <span>IMAGE</span>
-            </div>
-            """
-        else:
-            badge_html += f"""
-            <div style='background-color: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);'>
-                <span style='font-size: 1.5rem;'>📄</span>
-                <span>{file_type}</span>
-            </div>
-            """
+        with cols_badges[0]:
+            if file_type == 'PDF':
+                st.markdown("""
+                <div style='background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);'>
+                    <div style='font-size: 1.8rem;'>📄</div>
+                    <div style='font-size: 0.85rem; margin-top: 0.25rem;'>PDF</div>
+                </div>
+                """, unsafe_allow_html=True)
+            elif file_type == 'IMAGE':
+                st.markdown("""
+                <div style='background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);'>
+                    <div style='font-size: 1.8rem;'>🖼️</div>
+                    <div style='font-size: 0.85rem; margin-top: 0.25rem;'>IMAGE</div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown(f"""
+                <div style='background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);'>
+                    <div style='font-size: 1.8rem;'>📄</div>
+                    <div style='font-size: 0.85rem; margin-top: 0.25rem;'>{file_type}</div>
+                </div>
+                """, unsafe_allow_html=True)
         
         # Badge catégorie
-        if category:
-            badge_html += f"""
-            <div style='background-color: #667eea; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);'>
-                <span style='font-size: 1.5rem;'>📁</span>
-                <span>{category}</span>
-            </div>
-            """
+        with cols_badges[1]:
+            if category:
+                st.markdown(f"""
+                <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);'>
+                    <div style='font-size: 1.8rem;'>📁</div>
+                    <div style='font-size: 0.85rem; margin-top: 0.25rem;'>{category}</div>
+                </div>
+                """, unsafe_allow_html=True)
         
         # Badge confiance
-        if doc.get('confidence') is not None:
-            confidence_value = doc.get('confidence') * 100
-            if confidence_value >= 80:
-                conf_bg = "#10b981"
-            elif confidence_value >= 60:
-                conf_bg = "#f59e0b"
-            else:
-                conf_bg = "#ef4444"
-            
-            badge_html += f"""
-            <div style='background-color: {conf_bg}; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);'>
-                <span style='font-size: 1.5rem;'>⭐</span>
-                <span>Confiance: {confidence_value:.1f}%</span>
-            </div>
-            """
+        with cols_badges[2]:
+            if doc.get('confidence') is not None:
+                confidence_value = doc.get('confidence') * 100
+                if confidence_value >= 80:
+                    conf_bg = "linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                elif confidence_value >= 60:
+                    conf_bg = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)"
+                else:
+                    conf_bg = "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)"
+                
+                st.markdown(f"""
+                <div style='background: {conf_bg}; color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);'>
+                    <div style='font-size: 1.8rem;'>⭐</div>
+                    <div style='font-size: 0.85rem; margin-top: 0.25rem;'>{confidence_value:.1f}%</div>
+                </div>
+                """, unsafe_allow_html=True)
         
         # Badge date
-        if doc.get('created_at'):
-            from datetime import datetime
-            try:
-                date_obj = datetime.fromisoformat(doc['created_at'].replace('Z', '+00:00'))
-                date_str = date_obj.strftime('%d/%m/%Y %H:%M')
-                badge_html += f"""
-                <div style='background-color: #64748b; color: white; padding: 0.75rem 1.5rem; border-radius: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3);'>
-                    <span style='font-size: 1.5rem;'>📅</span>
-                    <span>{date_str}</span>
-                </div>
-                """
-            except:
-                pass
+        with cols_badges[3]:
+            if doc.get('created_at'):
+                from datetime import datetime
+                try:
+                    date_obj = datetime.fromisoformat(doc['created_at'].replace('Z', '+00:00'))
+                    date_str = date_obj.strftime('%d/%m/%Y')
+                    time_str = date_obj.strftime('%H:%M')
+                    st.markdown(f"""
+                    <div style='background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: white; padding: 0.75rem 1rem; border-radius: 1.5rem; font-weight: 700; text-align: center; box-shadow: 0 4px 10px rgba(100, 116, 139, 0.3);'>
+                        <div style='font-size: 1.8rem;'>📅</div>
+                        <div style='font-size: 0.7rem; margin-top: 0.25rem;'>{date_str}<br>{time_str}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                except:
+                    pass
         
-        badge_html += "</div>"
-        st.markdown(badge_html, unsafe_allow_html=True)
+        st.markdown("---")
         
         # Informations détaillées
         st.markdown("### 📋 Informations")
