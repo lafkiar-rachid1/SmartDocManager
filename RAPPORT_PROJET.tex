@@ -145,7 +145,9 @@
         \begin{flushleft} \large
             \textcolor{grayText}{\textit{Réalisé par :}}\\
             \vspace{0.2cm}
-            \textbf{\textcolor{primaryColor}{Lafkiar Rachid}}
+            \textbf{\textcolor{primaryColor}{Lafkiar Rachid}}\\
+            \textbf{\textcolor{primaryColor}{Charrafi Ayoub}}
+            
         \end{flushleft}
     \end{minipage}
     \hfill
@@ -153,7 +155,7 @@
         \begin{flushright} \large
             \textcolor{grayText}{\textit{Encadré par :}}\\
             \vspace{0.2cm}
-            \textbf{\textcolor{primaryColor}{[Nom de l'encadrant]}}
+            \textbf{\textcolor{primaryColor}{MR.Mawane Jamal}}
         \end{flushright}
     \end{minipage}
 
@@ -274,13 +276,15 @@ Le projet repose sur une architecture client-serveur moderne, séparant claireme
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{architecture_diagram.png}
-    \fbox{
-    \begin{minipage}[c][5cm]{0.8\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Diagramme d'Architecture Globale}} \\
-        \small (Client Streamlit $\rightleftharpoons$ API FastAPI $\rightleftharpoons$ Services OCR/IA $\rightleftharpoons$ Base de Données PostgreSQL)
-    \end{minipage}
-    }
+   \includegraphics[width=0.8\textwidth]{backend.png}
+    \par\vspace{0.2cm}
+    \textbf{Architecture Backend}
+    
+    \vspace{0.8cm}
+    
+   \includegraphics[width=0.8\textwidth]{front.png}
+    \par\vspace{0.2cm}
+    \textbf{Architecture Frontend}
     \caption{Architecture du système SmartDocManager}
 \end{figure}
 
@@ -292,12 +296,7 @@ Les principaux acteurs sont l'Utilisateur Visiteur (accès limité) et l'Utilisa
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{usecase_diagram.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.8\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Diagramme de Cas d'Utilisation}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.8\textwidth]{usecase.jpeg}
     \caption{Diagramme de Cas d'Utilisation}
 \end{figure}
 
@@ -306,12 +305,7 @@ Le modèle de données s'articule autour des entités principales : `User` (Util
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{class_diagram.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.8\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Diagramme de Classes}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.8\textwidth]{class.jpeg}
     \caption{Diagramme de Classes (Entités backend)}
 \end{figure}
 
@@ -320,12 +314,7 @@ Le diagramme de séquence illustre les interactions entre l'utilisateur, l'inter
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{sequence_diagram.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.8\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Diagramme de Séquence}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.8\textwidth]{sequn.jpeg}
     \caption{Diagramme de Séquence (Scénario d'Upload)}
 \end{figure}
 
@@ -344,7 +333,7 @@ Le développement a été réalisé avec la stack technique suivante :
 
 \subsection{Backend}
 \begin{itemize}
-    \item \textbf{Python 3.9+} : Langage principal.
+    \item \textbf{Python } : Langage principal.
     \item \textbf{FastAPI} : Pour la création d'une API REST haute performance.
     \item \textbf{PostgreSQL} : Base de données relationnelle robuste.
     \item \textbf{SQLAlchemy} : ORM pour l'interaction avec la base de données.
@@ -361,51 +350,29 @@ Le développement a été réalisé avec la stack technique suivante :
 L'interface a été conçue pour offrir une expérience utilisateur fluide (UX) et un design moderne (UI).
 
 \subsection{Page d'Accueil}
-La page d'accueil (\texttt{Accueil.py}) présente l'application et offre un mode "Visiteur" pour tester l'analyse sans inscription.
+La page d'accueil  présente l'application et offre un mode "Visiteur" pour tester l'analyse sans inscription.
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.9\textwidth]{screenshot_accueil_1.png}
-    \fbox{
-    \begin{minipage}[c][6cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture Accueil 1 (Haut de page)}}
-    \end{minipage}
-    }
+     \includegraphics[width=0.9\textwidth]{cap1.png}
     
     \vspace{0.5cm}
     
-    % \includegraphics[width=0.9\textwidth]{screenshot_accueil_2.png}
-    \fbox{
-    \begin{minipage}[c][6cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture Accueil 2 (Bas de page / Détails)}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.9\textwidth]{cap2.png}
     \caption{Vues de la Page d'Accueil}
 \end{figure}
 
 \subsection{Authentification (Login / Register)}
 Les pages sécurisées permettent aux utilisateurs de créer un compte et de se connecter pour sauvegarder leurs documents.
-\begin{itemize}
-    \item \texttt{0\_Login.py} : Formulaire de connexion.
-    \item \texttt{1\_Register.py} : Formulaire d'inscription.
-\end{itemize}
 \begin{figure}[H]
     \centering
-    \fbox{
-    \begin{minipage}[c][6cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture Login}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.8\textwidth]{login.png}
     \par\vspace{0.2cm}
     \textbf{Page de Connexion}
     
     \vspace{0.8cm}
     
-    \fbox{
-    \begin{minipage}[c][6cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture Register}}
-    \end{minipage}
-    }
+   \includegraphics[width=0.8\textwidth]{reg.png}
     \par\vspace{0.2cm}
     \textbf{Page d'Inscription}
     
@@ -413,44 +380,46 @@ Les pages sécurisées permettent aux utilisateurs de créer un compte et de se 
 \end{figure}
 
 \subsection{Upload et Analyse}
-La page \texttt{2\_Upload.py} est le cœur de l'application. Elle permet le glisser-déposer de fichiers. Une fois le document envoyé, le backend extrait le texte et le classifie en temps réel.
+La page d'Upload est le cœur de l'application. Elle permet le glisser-déposer de fichiers. Une fois le document envoyé, le backend extrait le texte et le classifie en temps réel.
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.9\textwidth]{screenshot_upload.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture de la page d'Upload et Résultats}}
-    \end{minipage}
-    }
+      \includegraphics[width=0.8\textwidth]{uploed.png}
+    \par\vspace{0.2cm}
+    
+    \vspace{0.8cm}
+    
+   \includegraphics[width=0.8\textwidth]{extr.png}
+    \par\vspace{0.2cm}
     \caption{Interface d'upload et affichage des résultats de classification}
 \end{figure}
 
 \subsection{Gestion des Documents}
-La page \texttt{3\_Documents.py} liste tous les fichiers sauvegardés par l'utilisateur avec des options de filtrage et de recherche.
+La page du Documents liste tous les fichiers sauvegardés par l'utilisateur avec des options de filtrage et de recherche.
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.9\textwidth]{screenshot_documents.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture de la liste des documents}}
-    \end{minipage}
-    }
+    \includegraphics[width=0.9\textwidth]{doc.png}
     \caption{Gestionnaire de documents}
 \end{figure}
 
 \subsection{Tableau de Bord (Dashboard)}
-La page \texttt{4\_Dashboard.py} offre une vue d'ensemble analytique. Les graphiques montrent la répartition des documents par catégorie et la confiance moyenne du modèle.
+La page Dashboard offre une vue d'ensemble analytique. Les graphiques montrent la répartition des documents par catégorie et la confiance moyenne du modèle.
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.9\textwidth]{screenshot_dashboard.png}
-    \fbox{
-    \begin{minipage}[c][8cm]{0.9\textwidth}
-        \centering \textbf{\textcolor{secondaryColor}{PLACEHOLDER: Capture du Dashboard}}
-    \end{minipage}
-    }
+       \includegraphics[width=0.8\textwidth]{dash1.png}
+    \par\vspace{0.2cm}
+    
+    \vspace{0.8cm}
+    
+   \includegraphics[width=0.8\textwidth]{dash2.png}
+    \par
+    
+     \vspace{0.8cm}
+     
+    \includegraphics[width=0.8\textwidth]{dash3.png}
+    \par\vspace{0.2cm}}
     \caption{Tableau de bord statistique}
 \end{figure}
 
