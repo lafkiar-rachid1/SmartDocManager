@@ -27,7 +27,7 @@ Un projet académique full-stack complet permettant de téléverser des document
 - **SQLAlchemy** - ORM Python
 - **Tesseract OCR** - Extraction de texte
 - **OpenCV** - Traitement d'images
-- **scikit-learn** - Machine Learning (TF-IDF + Naive Bayes)
+- **scikit-learn** - Machine Learning (TF-IDF +( Naive Bayes, Logistic Regression, SVM, Random Forest))
 
 ### Frontend
 - **Streamlit 1.31** - Framework web Python pour data apps
@@ -66,7 +66,7 @@ SmartDocManager/
 │   │
 │   └── storage/documents/     # Fichiers uploadés
 │
-└── frontendStreamlit/
+└── frontend/
     ├── Accueil.py            # Page d'accueil (analyse visiteur)
     ├── pages/                # Pages de l'application
     │   ├── 0_Login.py       # Page de connexion
@@ -179,10 +179,10 @@ Documentation API disponible sur:
 
 ### Installation Frontend Streamlit
 
-1. Naviguer vers le dossier frontendStreamlit:
+1. Naviguer vers le dossier frontend:
 
 ```bash
-cd frontendStreamlit
+cd frontend
 ```
 
 2. Installer les dépendances:
@@ -383,43 +383,5 @@ Solution: Vérifier que le backend FastAPI est démarré sur le port 8000
 Streamlit command not found
 ```
 Solution: Installer Streamlit `pip install streamlit` et vérifier que l'environnement virtuel est activé
-
-## 📝 Améliorations Possibles
-
-- [x] Authentification utilisateur (JWT)
-- [x] Interface Streamlit moderne et responsive
-- [x] Mode visiteur pour analyse sans inscription
-- [ ] Support de plus de formats (DOCX, etc.)
-- [ ] Classification multi-label
-- [ ] Détection automatique de la langue
-- [ ] API de recherche full-text
-- [ ] Notifications en temps réel
-- [ ] Docker containerization
-- [ ] Tests unitaires et d'intégration
-- [ ] CI/CD pipeline
-- [ ] Export PDF des documents analysés
-- [ ] Historique des modifications
-
-## 👥 Auteurs
-
-Projet académique réalisé dans le cadre du cursus ENSET 2024.
-
-## 📄 Licence
-
-Projet académique - Usage éducatif uniquement.
-
-## 🙏 Remerciements
-
-- FastAPI pour le framework backend rapide et moderne
-- Tesseract OCR pour l'extraction de texte performante
-- scikit-learn pour les outils de Machine Learning
-- Streamlit pour l'interface utilisateur intuitive et rapide à développer
-- Plotly pour les visualisations interactives
-
----
-
-**Note**: Ce projet est destiné à des fins pédagogiques. Pour une utilisation en production, des améliorations de sécurité et de performance sont recommandées.
-
-Pour toute question ou problème, consultez la documentation API sur `/docs` ou créez une issue.
 
 🚀 **Bon développement !**
