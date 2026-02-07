@@ -97,7 +97,7 @@ const Dashboard = () => {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            📊 Dashboard
+             Dashboard
           </h1>
           <p className="text-gray-600">
             Statistiques et visualisations de vos documents
@@ -125,7 +125,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Total Documents</h3>
-            <span className="text-3xl">📁</span>
+            <span className="text-3xl"></span>
           </div>
           <p className="text-4xl font-bold">{stats?.total_documents || 0}</p>
           <p className="text-blue-100 text-sm mt-2">Documents analysés</p>
@@ -135,7 +135,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">7 Derniers Jours</h3>
-            <span className="text-3xl">📅</span>
+            <span className="text-3xl"></span>
           </div>
           <p className="text-4xl font-bold">{stats?.recent_documents || 0}</p>
           <p className="text-purple-100 text-sm mt-2">Nouveaux documents</p>
@@ -145,7 +145,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Confiance Moy.</h3>
-            <span className="text-3xl">🎯</span>
+            <span className="text-3xl"></span>
           </div>
           <p className="text-4xl font-bold">
             {stats?.average_confidence ? (stats.average_confidence * 100).toFixed(1) : 0}%
@@ -157,7 +157,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-lg p-6 text-white">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold">Mots Extraits</h3>
-            <span className="text-3xl">📝</span>
+            <span className="text-3xl"></span>
           </div>
           <p className="text-4xl font-bold">
             {stats?.total_words_extracted ? stats.total_words_extracted.toLocaleString() : 0}

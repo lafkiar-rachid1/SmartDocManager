@@ -140,11 +140,6 @@ const Login = () => {
               </div>
             </form>
           </div>
-
-          {/* Footer info */}
-          <p className="text-center text-xs text-blue-200/60">
-            © 2024 Smart Document Manager - Sécurisé et confidentiel
-          </p>
         </div>
       </div>
     </div>

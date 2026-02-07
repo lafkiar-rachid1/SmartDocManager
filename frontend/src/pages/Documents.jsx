@@ -116,12 +116,12 @@ const Documents = () => {
       
         {/* Filtres */}
         <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl border border-white/20 p-6 mb-8">
-          <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6">🔍 Filtres</h2>
+          <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6"> Filtres</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Recherche */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                🔎 Rechercher
+                Rechercher
               </label>
               <input
                 type="text"
@@ -135,7 +135,7 @@ const Documents = () => {
             {/* Catégorie */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                📂 Catégorie
+                 Catégorie
               </label>
               <select
                 value={filterCategory}
@@ -153,7 +153,7 @@ const Documents = () => {
             {/* Type */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                📄 Type de fichier
+                 Type de fichier
               </label>
               <select
                 value={filterType}
