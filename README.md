@@ -6,7 +6,8 @@ Un projet académique full-stack complet permettant de téléverser des document
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-green.svg)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.31-FF4B4B.svg)
+![React](https://img.shields.io/badge/React-18.2-61DAFB.svg)
+![Vite](https://img.shields.io/badge/Vite-5.0-646CFF.svg)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue.svg)
 
 ## 🎯 Objectifs du Projet
@@ -30,11 +31,13 @@ Un projet académique full-stack complet permettant de téléverser des document
 - **scikit-learn** - Machine Learning (TF-IDF +( Naive Bayes, Logistic Regression, SVM, Random Forest))
 
 ### Frontend
-- **Streamlit 1.31** - Framework web Python pour data apps
-- **Plotly Express** - Graphiques interactifs
-- **Pandas** - Manipulation de données
-- **Pillow** - Traitement d'images
-- **Requests** - Client HTTP
+- **React 18.2** - Bibliothèque JavaScript pour interfaces utilisateur
+- **Vite 5.0** - Build tool et dev server ultra-rapide
+- **React Router 6** - Navigation côté client
+- **Tailwind CSS 3.4** - Framework CSS utility-first
+- **Axios** - Client HTTP pour les requêtes API
+- **Recharts** - Bibliothèque de graphiques pour React
+- **React Icons** - Icônes pour React
 
 ## 📁 Structure du Projet
 
@@ -67,23 +70,34 @@ SmartDocManager/
 │   └── storage/documents/     # Fichiers uploadés
 │
 └── frontend/
-    ├── Accueil.py            # Page d'accueil (analyse visiteur)
-    ├── pages/                # Pages de l'application
-    │   ├── 0_Login.py       # Page de connexion
-    │   ├── 1_Register.py    # Page d'inscription
-    │   ├── 2_Upload.py      # Page d'upload authentifié
-    │   ├── 3_Documents.py   # Liste et gestion des documents
-    │   └── 4_Dashboard.py   # Statistiques et visualisations
+    ├── index.html           # Point d'entrée HTML
+    ├── package.json         # Dépendances Node.js
+    ├── vite.config.js       # Configuration Vite
+    ├── tailwind.config.js   # Configuration Tailwind CSS
     │
-    ├── services/             # Services backend
-    │   ├── auth_service.py  # Service d'authentification
-    │   └── api_service.py   # Service API REST
-    │
-    ├── .streamlit/
-    │   └── config.toml      # Configuration Streamlit
-    │
-    ├── requirements.txt     # Dépendances Python
-    └── README.md
+    └── src/
+        ├── main.jsx         # Point d'entrée React
+        ├── App.jsx          # Composant principal + Routing
+        ├── index.css        # Styles globaux
+        │
+        ├── pages/           # Pages de l'application
+        │   ├── Accueil.jsx    # Page d'accueil (analyse visiteur)
+        │   ├── Login.jsx      # Page de connexion
+        │   ├── Register.jsx   # Page d'inscription
+        │   ├── Upload.jsx     # Page d'upload authentifié
+        │   ├── Documents.jsx  # Liste et gestion des documents
+        │   └── Dashboard.jsx  # Statistiques et visualisations
+        │
+        ├── components/      # Composants réutilisables
+        │   ├── Navbar.jsx        # Barre de navigation
+        │   ├── PrivateRoute.jsx  # Protection des routes
+        │   ├── AuthImage.jsx     # Image d'authentification
+        │   ├── FileUpload.jsx    # Composant upload de fichiers
+        │   └── DocumentCard.jsx  # Carte de document
+        │
+        └── services/        # Services API
+            ├── authService.js # Service d'authentification
+            └── api.js         # Service API REST
 ```
 
 ## 🚀 Installation et Configuration
@@ -91,8 +105,9 @@ SmartDocManager/
 ### Prérequis
 
 1. **Python 3.9+**
-2. **PostgreSQL 12+**
-3. **Tesseract OCR**
+2. **Node.js 16+** et **npm**
+3. **PostgreSQL 12+**
+4. **Tesseract OCR**
    - Windows: Télécharger depuis [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
    - Linux: `sudo apt-get install tesseract-ocr tesseract-ocr-fra`
    - macOS: `brew install tesseract tesseract-lang`
@@ -177,7 +192,7 @@ Documentation API disponible sur:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
-### Installation Frontend Streamlit
+### Installation Frontend React
 
 1. Naviguer vers le dossier frontend:
 
@@ -185,25 +200,27 @@ Documentation API disponible sur:
 cd frontend
 ```
 
-2. Installer les dépendances:
+2. Installer les dépendances Node.js:
 
 ```bash
-pip install -r requirements.txt
+npm install
 ```
 
-3. Lancer l'application Streamlit:
+3. Lancer le serveur de développement:
 
 ```bash
-streamlit run Accueil.py
+npm run dev
 ```
 
-L'application démarre sur `http://localhost:8501`
+L'application démarre sur `http://localhost:5173`
+
+**Note:** Assurez-vous que Node.js (version 16+) et npm sont installés sur votre système.
 
 ## 📖 Utilisation
 
 ### 1. Mode Visiteur (Page d'Accueil)
 
-1. Ouvrir l'application sur `http://localhost:8501`
+1. Ouvrir l'application sur `http://localhost:5173`
 2. Téléverser un document (analyse sans sauvegarde)
 3. Voir la catégorie détectée et le niveau de confiance
 4. **Note**: Les documents ne sont pas sauvegardés en mode visiteur
@@ -244,10 +261,10 @@ L'application démarre sur `http://localhost:8501`
    - Documents des 7 derniers jours
    - Confiance moyenne de classification
    - Nombre de catégories uniques
-3. Voir les graphiques interactifs (Plotly):
-   - Distribution par catégorie (Camembert)
-   - Documents par catégorie (Barres)
-   - Tableau récapitulatif des catégories
+3. Voir les graphiques interactifs (Recharts):
+   - Distribution par catégorie (Graphiques de barres)
+   - Évolution temporelle des documents
+   - Tableau récapitulatif avec filtres
 
 ## 🤖 Classification IA
 
@@ -378,10 +395,16 @@ Error: Connection refused to http://localhost:8000
 ```
 Solution: Vérifier que le backend FastAPI est démarré sur le port 8000
 
-**5. Streamlit ne démarre pas**
+**5. npm install échoue**
 ```
-Streamlit command not found
+Error: npm install failed
 ```
-Solution: Installer Streamlit `pip install streamlit` et vérifier que l'environnement virtuel est activé
+Solution: Vérifier que Node.js 16+ est installé avec `node --version`. Supprimer `node_modules` et `package-lock.json` puis réessayer.
+
+**6. Erreurs CORS**
+```
+Error: CORS policy blocked
+```
+Solution: Vérifier que le backend FastAPI a configuré CORS pour autoriser `http://localhost:5173`
 
 🚀 **Bon développement !**
