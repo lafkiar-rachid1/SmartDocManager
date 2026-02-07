@@ -185,9 +185,6 @@ python main.py
 
 Le serveur démarre sur `http://localhost:8000`
 
-Documentation API disponible sur:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
 
 ### Installation Frontend React
 
@@ -404,4 +401,3 @@ Error: CORS policy blocked
 ```
 Solution: Vérifier que le backend FastAPI a configuré CORS pour autoriser `http://localhost:5173`
 
-🚀 **Bon développement !**
