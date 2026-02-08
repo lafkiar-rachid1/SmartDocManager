@@ -16,8 +16,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/smartdoc_db")
 
 # Créer le moteur de base de données
-# echo=True affiche les requêtes SQL (utile pour le débogage)
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 
 # Créer une factory de sessions
 # autocommit=False: les transactions doivent être explicitement validées

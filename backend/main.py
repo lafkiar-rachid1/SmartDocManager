@@ -37,7 +37,6 @@ app = FastAPI(
 )
 
 # Configuration CORS pour permettre les requêtes depuis le frontend
-# En production, remplacer "*" par l'URL spécifique du frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Autoriser toutes les origines (à restreindre en production)
@@ -47,7 +46,6 @@ app.add_middleware(
 )
 
 # Monter le dossier de stockage pour servir les fichiers statiques
-# Accessible via /storage/documents/nom_fichier.pdf
 app.mount("/storage", StaticFiles(directory="storage"), name="storage")
 
 # Enregistrer les routes de l'API
@@ -91,13 +89,13 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
     
     # Lancer le serveur
-    print(f"🚀 Serveur démarré sur http://{host}:{port}")
-    print(f"📚 Documentation disponible sur http://{host}:{port}/docs")
+    print(f"Serveur démarré sur http://{host}:{port}")
+    print(f"Documentation disponible sur http://{host}:{port}/docs")
     
     uvicorn.run(
         "main:app",
         host=host,
         port=port,
-        reload=True,  # Rechargement automatique en développement
+        reload=True, 
         log_level="info"
     )
